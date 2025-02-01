@@ -1,7 +1,7 @@
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import { useControls, button } from 'leva'
 import { Perf } from 'r3f-perf'
-import {useFrame, useThree} from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 const desiredCameraPosition = new THREE.Vector3(0, 3, 6);
@@ -11,7 +11,6 @@ let cameraAnimationStartTime = new Date();
 export default function Experience()
 {
     const roccoModel = useGLTF('rocco.glb')
-    const { camera } = useThree();
 
     const { showPerf } = useControls('Performance', {
         showPerf: { value: true, label: 'show' }
@@ -19,10 +18,14 @@ export default function Experience()
     const { enableOrbitControls } = useControls('OrbitControls', {
         enableOrbitControls: { value: false, label: 'enabled' }
     })
-    const { rockColor, rockRotationY, shake } = useControls('Rock', {
+    const { rockColor, rockRotationY } = useControls('Rock', {
         rockColor: { value: 'red', label: 'color' },
         rockRotationY: { value: 0, label: 'rotationY', min: -Math.PI, max: Math.PI },
-        shake: button(() => {
+    })
+    const { cameraShakeDurationMSecs, cameraShakeMaxAmplitude, shake } = useControls('Shake', {
+        cameraShakeDurationMSecs: { value: 5000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
+        cameraShakeMaxAmplitude: { value: 1.5, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25 },
+        shake: button((get) => {
             cameraAnimationStartTime = new Date();
             cameraShaking = true
 
@@ -31,14 +34,17 @@ export default function Experience()
                 desiredCameraPosition.x = 0
                 desiredCameraPosition.y = 3
                 desiredCameraPosition.z = 6
-            }, 2000)
+            }, get('Shake.cameraShakeDurationMSecs'))
         })
     })
 
     useFrame(state => {
         if (cameraShaking) {
             const elapsedTime = new Date() - cameraAnimationStartTime
-            desiredCameraPosition.x = Math.sin(0.01 * elapsedTime)
+            const animationProgress = elapsedTime / cameraShakeDurationMSecs;
+            const cameraShakeAmplitude = cameraShakeMaxAmplitude * Math.sin(animationProgress * Math.PI);
+
+            desiredCameraPosition.x = cameraShakeAmplitude * Math.sin(0.01 * elapsedTime)
         }
         state.camera.position.lerp(desiredCameraPosition, 0.05)
     });
