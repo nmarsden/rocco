@@ -15,17 +15,28 @@ export default function Experience()
     const { showPerf } = useControls('Performance', {
         showPerf: { value: true, label: 'show' }
     })
-    const { enableOrbitControls } = useControls('OrbitControls', {
-        enableOrbitControls: { value: false, label: 'enabled' }
+    const { orbitControlsEnabled } = useControls('OrbitControls', {
+        orbitControlsEnabled: {
+            value: false,
+            label: 'enabled'
+            // onChange: (value) => {
+            //     console.log('--------- orbitControls ----------------------')
+            //     console.log('orbitControlsEnabled=', value)
+            // },
+            // transient: false
+        }
     })
     const { rockColor, rockRotationY } = useControls('Rock', {
         rockColor: { value: 'red', label: 'color' },
         rockRotationY: { value: 0, label: 'rotationY', min: -Math.PI, max: Math.PI },
     })
     const { cameraShakeDurationMSecs, cameraShakeMaxAmplitude, shake } = useControls('Shake', {
-        cameraShakeDurationMSecs: { value: 5000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
-        cameraShakeMaxAmplitude: { value: 1.5, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25 },
+        cameraShakeDurationMSecs: { value: 3000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
+        cameraShakeMaxAmplitude: { value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25 },
         shake: button((get) => {
+            if (orbitControlsEnabled) {
+                return;
+            }
             cameraAnimationStartTime = new Date();
             cameraShaking = true
 
@@ -39,6 +50,9 @@ export default function Experience()
     })
 
     useFrame(state => {
+        if (orbitControlsEnabled) {
+            return;
+        }
         if (cameraShaking) {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraShakeDurationMSecs;
@@ -47,6 +61,9 @@ export default function Experience()
             desiredCameraPosition.x = cameraShakeAmplitude * Math.sin(0.01 * elapsedTime)
         }
         state.camera.position.lerp(desiredCameraPosition, 0.05)
+        if (!cameraShaking) {
+            state.camera.lookAt(0, 0, 0)
+        }
     });
 
     return <>
@@ -54,14 +71,13 @@ export default function Experience()
 
         <OrbitControls
             makeDefault={true}
-            enabled={enableOrbitControls}
+            enabled={orbitControlsEnabled}
         />
 
-        <axesHelper args={[5]}/>
+        {/*<axesHelper args={[5]}/>*/}
 
         <directionalLight
             position={[3, 3, 3]}
-            // position={[1, 2, 3]}
             intensity={4.5}
             castShadow={true}
         />
