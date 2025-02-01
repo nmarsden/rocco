@@ -4,7 +4,7 @@ import { Perf } from 'r3f-perf'
 
 export default function Experience()
 {
-    const roccoModel = useGLTF('/rocco.glb')
+    const roccoModel = useGLTF('rocco.glb')
 
     const { showPerf } = useControls('Performance', {
         showPerf: { value: true, label: 'show' }
@@ -32,4 +32,4 @@ export default function Experience()
     </>
 }
 
-useGLTF.preload('/rocco.glb')
+useGLTF.preload('rocco.glb')
