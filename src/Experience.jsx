@@ -1,102 +1,15 @@
-import { OrbitControls, useGLTF } from '@react-three/drei'
-import { useControls, button } from 'leva'
-import { Perf } from 'r3f-perf'
-import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import Performance from "./Performance.jsx";
+import CameraControls from "./CameraControls.jsx";
+import Lights from "./Lights.jsx";
+import Rock from "./Rock.jsx";
+import Floor from "./Floor.jsx";
 
-const desiredCameraPosition = new THREE.Vector3(0, 3, 6);
-let cameraShaking = false;
-let cameraAnimationStartTime = new Date();
-
-export default function Experience()
-{
-    const roccoModel = useGLTF('rocco.glb')
-
-    const { showPerf } = useControls('Performance', {
-        showPerf: { value: true, label: 'show' }
-    })
-    const { orbitControlsEnabled } = useControls('OrbitControls', {
-        orbitControlsEnabled: {
-            value: false,
-            label: 'enabled'
-            // onChange: (value) => {
-            //     console.log('--------- orbitControls ----------------------')
-            //     console.log('orbitControlsEnabled=', value)
-            // },
-            // transient: false
-        }
-    })
-    const { rockColor, rockRotationY } = useControls('Rock', {
-        rockColor: { value: 'red', label: 'color' },
-        rockRotationY: { value: 0, label: 'rotationY', min: -Math.PI, max: Math.PI },
-    })
-    const { cameraShakeDurationMSecs, cameraShakeMaxAmplitude, shake } = useControls('Shake', {
-        cameraShakeDurationMSecs: { value: 3000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
-        cameraShakeMaxAmplitude: { value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25 },
-        shake: button((get) => {
-            if (orbitControlsEnabled) {
-                return;
-            }
-            cameraAnimationStartTime = new Date();
-            cameraShaking = true
-
-            setTimeout(() => {
-                cameraShaking = false
-                desiredCameraPosition.x = 0
-                desiredCameraPosition.y = 3
-                desiredCameraPosition.z = 6
-            }, get('Shake.cameraShakeDurationMSecs'))
-        })
-    })
-
-    useFrame(state => {
-        if (orbitControlsEnabled) {
-            return;
-        }
-        if (cameraShaking) {
-            const elapsedTime = new Date() - cameraAnimationStartTime
-            const animationProgress = elapsedTime / cameraShakeDurationMSecs;
-            const cameraShakeAmplitude = cameraShakeMaxAmplitude * Math.sin(animationProgress * Math.PI);
-
-            desiredCameraPosition.x = cameraShakeAmplitude * Math.sin(0.01 * elapsedTime)
-        }
-        state.camera.position.lerp(desiredCameraPosition, 0.05)
-        if (!cameraShaking) {
-            state.camera.lookAt(0, 0, 0)
-        }
-    });
-
+export default function Experience() {
     return <>
-        {showPerf && window.isDebug ? <Perf position={'top-left'} /> : null}
-
-        <OrbitControls
-            makeDefault={true}
-            enabled={orbitControlsEnabled}
-        />
-
-        {/*<axesHelper args={[5]}/>*/}
-
-        <directionalLight
-            position={[3, 3, 3]}
-            intensity={4.5}
-            castShadow={true}
-        />
-        <ambientLight intensity={1.5}/>
-
-        <mesh
-            rotation-y={rockRotationY}
-            geometry={roccoModel.scene.children[0].geometry}
-            castShadow={true}
-            onClick={shake}
-        >
-            <meshStandardMaterial color={rockColor}/>
-        </mesh>
-
-        <mesh position-y={-1} rotation-x={-Math.PI * 0.5} scale={10} receiveShadow={true}>
-            <planeGeometry/>
-            <meshStandardMaterial color="greenyellow"/>
-        </mesh>
+        <Performance />
+        <CameraControls />
+        <Lights />
+        <Rock />
+        <Floor />
     </>
 }
-
-useGLTF.preload('rocco.glb')
