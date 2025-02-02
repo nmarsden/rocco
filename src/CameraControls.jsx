@@ -6,6 +6,7 @@ import * as THREE from "three";
 const desiredCameraPosition = new THREE.Vector3(0, 3, 6);
 let cameraShaking = false;
 let cameraSpin = false;
+let cameraRollOver = false;
 let cameraAnimationStartTime = new Date();
 
 export default function CameraControls() {
@@ -71,6 +72,30 @@ export default function CameraControls() {
             })
         },
         {
+            collapsed: true
+        }
+    );
+
+    const { cameraRollOverDurationMSecs } = useControls(
+        'RollOver',
+        {
+            cameraRollOverDurationMSecs: { value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
+            rollOver: button((get) => {
+                if (orbitControlsEnabled) {
+                    return;
+                }
+                cameraAnimationStartTime = new Date();
+                cameraRollOver = true
+
+                setTimeout(() => {
+                    cameraRollOver = false
+                    desiredCameraPosition.x = 0
+                    desiredCameraPosition.y = 3
+                    desiredCameraPosition.z = 6
+                }, get('RollOver.cameraRollOverDurationMSecs'))
+            })
+        },
+        {
             collapsed: false
         }
     );
@@ -94,8 +119,14 @@ export default function CameraControls() {
             desiredCameraPosition.z = 6 * Math.cos(animationProgress * Math.PI * 2);
             desiredCameraPosition.y = 1
         }
+        if (cameraRollOver) {
+            const elapsedTime = new Date() - cameraAnimationStartTime
+            const animationProgress = elapsedTime / cameraRollOverDurationMSecs;
+
+            state.camera.rotation.z = animationProgress * Math.PI * 2;
+        }
         state.camera.position.lerp(desiredCameraPosition, 0.05)
-        if (!cameraShaking) {
+        if (!cameraShaking && !cameraRollOver) {
             state.camera.lookAt(0, 0, 0)
         }
     });
