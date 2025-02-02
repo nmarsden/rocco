@@ -1,5 +1,5 @@
 import {OrbitControls} from "@react-three/drei";
-import {button, useControls} from "leva";
+import {button, folder, useControls} from "leva";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -11,11 +11,11 @@ let cameraAnimationStartTime = new Date();
 
 export default function CameraControls() {
     const { orbitControlsEnabled } = useControls(
-        'OrbitControls',
+        'CameraControls',
         {
             orbitControlsEnabled: {
                 value: false,
-                label: 'enabled'
+                label: 'orbit controls'
                 // onChange: (value) => {
                 //     console.log('--------- orbitControls ----------------------')
                 //     console.log('orbitControlsEnabled=', value)
@@ -28,24 +28,31 @@ export default function CameraControls() {
         }
     );
     const { cameraShakeDurationMSecs, cameraShakeMaxAmplitude } = useControls(
-        'Shake',
+        'CameraControls',
         {
-            cameraShakeDurationMSecs: { value: 3000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
-            cameraShakeMaxAmplitude: { value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25 },
-            shake: button((get) => {
-                if (orbitControlsEnabled) {
-                    return;
-                }
-                cameraAnimationStartTime = new Date();
-                cameraShaking = true
+            'Shake': folder(
+                {
+                    cameraShakeDurationMSecs: {value: 3000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200},
+                    cameraShakeMaxAmplitude: {value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25},
+                    shake: button((get) => {
+                        if (orbitControlsEnabled) {
+                            return;
+                        }
+                        cameraAnimationStartTime = new Date();
+                        cameraShaking = true
 
-                setTimeout(() => {
-                    cameraShaking = false
-                    desiredCameraPosition.x = 0
-                    desiredCameraPosition.y = 3
-                    desiredCameraPosition.z = 6
-                }, get('Shake.cameraShakeDurationMSecs'))
-            })
+                        setTimeout(() => {
+                            cameraShaking = false
+                            desiredCameraPosition.x = 0
+                            desiredCameraPosition.y = 3
+                            desiredCameraPosition.z = 6
+                        }, get('CameraControls.Shake.cameraShakeDurationMSecs'))
+                    })
+                },
+                {
+                    collapsed: true
+                }
+            )
         },
         {
             collapsed: true
@@ -53,23 +60,30 @@ export default function CameraControls() {
     );
 
     const { cameraSpinDurationMSecs } = useControls(
-        'Spin',
+        'CameraControls',
         {
-            cameraSpinDurationMSecs: { value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
-            spin: button((get) => {
-                if (orbitControlsEnabled) {
-                    return;
-                }
-                cameraAnimationStartTime = new Date();
-                cameraSpin = true
+            'Spin': folder(
+                {
+                    cameraSpinDurationMSecs: {value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200},
+                    spin: button((get) => {
+                        if (orbitControlsEnabled) {
+                            return;
+                        }
+                        cameraAnimationStartTime = new Date();
+                        cameraSpin = true
 
-                setTimeout(() => {
-                    cameraSpin = false
-                    desiredCameraPosition.x = 0
-                    desiredCameraPosition.y = 3
-                    desiredCameraPosition.z = 6
-                }, get('Spin.cameraSpinDurationMSecs'))
-            })
+                        setTimeout(() => {
+                            cameraSpin = false
+                            desiredCameraPosition.x = 0
+                            desiredCameraPosition.y = 3
+                            desiredCameraPosition.z = 6
+                        }, get('CameraControls.Spin.cameraSpinDurationMSecs'))
+                    })
+                },
+                {
+                    collapsed: true
+                }
+            )
         },
         {
             collapsed: true
@@ -77,26 +91,39 @@ export default function CameraControls() {
     );
 
     const { cameraRollOverDurationMSecs } = useControls(
-        'RollOver',
+        'CameraControls',
         {
-            cameraRollOverDurationMSecs: { value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200 },
-            rollOver: button((get) => {
-                if (orbitControlsEnabled) {
-                    return;
-                }
-                cameraAnimationStartTime = new Date();
-                cameraRollOver = true
+            'RollOver': folder(
+                {
+                    cameraRollOverDurationMSecs: {
+                        value: 2000,
+                        label: 'duration (msecs)',
+                        min: 1000,
+                        max: 10000,
+                        step: 200
+                    },
+                    rollOver: button((get) => {
+                        if (orbitControlsEnabled) {
+                            return;
+                        }
+                        cameraAnimationStartTime = new Date();
+                        cameraRollOver = true
 
-                setTimeout(() => {
-                    cameraRollOver = false
-                    desiredCameraPosition.x = 0
-                    desiredCameraPosition.y = 3
-                    desiredCameraPosition.z = 6
-                }, get('RollOver.cameraRollOverDurationMSecs'))
-            })
+                        setTimeout(() => {
+                            cameraRollOver = false
+                            desiredCameraPosition.x = 0
+                            desiredCameraPosition.y = 3
+                            desiredCameraPosition.z = 6
+                        }, get('CameraControls.RollOver.cameraRollOverDurationMSecs'))
+                    })
+                },
+                {
+                    collapsed: true
+                }
+            )
         },
         {
-            collapsed: false
+            collapsed: true
         }
     );
 

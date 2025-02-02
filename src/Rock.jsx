@@ -1,14 +1,21 @@
 import {useGLTF} from "@react-three/drei";
-import {useControls} from "leva";
+import {folder, useControls} from "leva";
 
 export default function Rock() {
     const roccoModel = useGLTF('rocco.glb');
 
     const { rockColor, rockRotationY } = useControls(
-        'Rock',
+        'World',
         {
-            rockColor: { value: 'red', label: 'color' },
-            rockRotationY: { value: 0, label: 'rotationY', min: -Math.PI, max: Math.PI },
+            'Rock': folder(
+                {
+                    rockColor: {value: 'red', label: 'color'},
+                    rockRotationY: {value: 0, label: 'rotationY', min: -Math.PI, max: Math.PI},
+                },
+                {
+                    collapsed: true
+                }
+            )
         },
         {
             collapsed: true

@@ -1,10 +1,17 @@
-import {useControls} from "leva";
+import {folder, useControls} from "leva";
 
 export default function Background() {
     const { color } = useControls(
-        'Background',
+        'World',
         {
-            color: '#ebebeb'
+            'Background': folder(
+                {
+                    color: '#ebebeb'
+                },
+                {
+                    collapsed: true
+                }
+            )
         },
         {
             collapsed: true
