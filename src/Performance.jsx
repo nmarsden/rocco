@@ -7,6 +7,6 @@ export default function Performance() {
     })
 
     return <>
-        {showPerf && window.isDebug ? <Perf position={'top-left'} /> : null}
+        {showPerf && window.isDebug ? <Perf position={'bottom-left'} /> : null}
     </>
 }
