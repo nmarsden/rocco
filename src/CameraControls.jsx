@@ -3,10 +3,14 @@ import {button, folder, useControls} from "leva";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 
-const desiredCameraPosition = new THREE.Vector3(0, 3, 6);
+const defaultCameraPosition = new THREE.Vector3(0, 3, 6);
+const desiredCameraPosition = new THREE.Vector3();
+desiredCameraPosition.copy(defaultCameraPosition);
+
 let cameraShaking = false;
 let cameraSpin = false;
 let cameraRollOver = false;
+let cameraStand = false;
 let cameraAnimationStartTime = new Date();
 
 export default function CameraControls() {
@@ -43,9 +47,7 @@ export default function CameraControls() {
 
                         setTimeout(() => {
                             cameraShaking = false
-                            desiredCameraPosition.x = 0
-                            desiredCameraPosition.y = 3
-                            desiredCameraPosition.z = 6
+                            desiredCameraPosition.copy(defaultCameraPosition);
                         }, get('CameraControls.Shake.cameraShakeDurationMSecs'))
                     })
                 },
@@ -74,9 +76,7 @@ export default function CameraControls() {
 
                         setTimeout(() => {
                             cameraSpin = false
-                            desiredCameraPosition.x = 0
-                            desiredCameraPosition.y = 3
-                            desiredCameraPosition.z = 6
+                            desiredCameraPosition.copy(defaultCameraPosition);
                         }, get('CameraControls.Spin.cameraSpinDurationMSecs'))
                     })
                 },
@@ -111,9 +111,7 @@ export default function CameraControls() {
 
                         setTimeout(() => {
                             cameraRollOver = false
-                            desiredCameraPosition.x = 0
-                            desiredCameraPosition.y = 3
-                            desiredCameraPosition.z = 6
+                            desiredCameraPosition.copy(defaultCameraPosition);
                         }, get('CameraControls.RollOver.cameraRollOverDurationMSecs'))
                     })
                 },
@@ -124,6 +122,41 @@ export default function CameraControls() {
         },
         {
             collapsed: true
+        }
+    );
+
+    const { cameraStandDurationMSecs } = useControls(
+        'CameraControls',
+        {
+            'Stand': folder(
+                {
+                    cameraStandDurationMSecs: {
+                        value: 4000,
+                        label: 'duration (msecs)',
+                        min: 1000,
+                        max: 10000,
+                        step: 200
+                    },
+                    stand: button((get) => {
+                        if (orbitControlsEnabled) {
+                            return;
+                        }
+                        cameraAnimationStartTime = new Date();
+                        cameraStand = true
+
+                        setTimeout(() => {
+                            cameraStand = false
+                            desiredCameraPosition.copy(defaultCameraPosition);
+                        }, get('CameraControls.Stand.cameraStandDurationMSecs'))
+                    })
+                },
+                {
+                    collapsed: false
+                }
+            )
+        },
+        {
+            collapsed: false
         }
     );
 
@@ -144,7 +177,7 @@ export default function CameraControls() {
 
             desiredCameraPosition.x = 6 * Math.sin(animationProgress * Math.PI * 2);
             desiredCameraPosition.z = 6 * Math.cos(animationProgress * Math.PI * 2);
-            desiredCameraPosition.y = 1
+            desiredCameraPosition.y = 0
         }
         if (cameraRollOver) {
             const elapsedTime = new Date() - cameraAnimationStartTime
@@ -152,8 +185,20 @@ export default function CameraControls() {
 
             state.camera.rotation.z = animationProgress * Math.PI * 2;
         }
+        if (cameraStand) {
+            // TODO Improve the stand animation. Perhaps use maath/ease ?
+            const elapsedTime = new Date() - cameraAnimationStartTime
+            const animationProgress = elapsedTime / cameraStandDurationMSecs;
+
+            desiredCameraPosition.y = defaultCameraPosition.y - ((defaultCameraPosition.y + 1) * Math.sin(animationProgress * Math.PI));
+            desiredCameraPosition.z = defaultCameraPosition.z - ((defaultCameraPosition.z - 2) * Math.sin(animationProgress * Math.PI));
+
+            const targetY = Math.sin(animationProgress * Math.PI);
+            state.camera.lookAt(0, targetY, 0);
+        }
+
         state.camera.position.lerp(desiredCameraPosition, 0.05)
-        if (!cameraShaking && !cameraRollOver) {
+        if (!cameraShaking && !cameraRollOver && !cameraStand) {
             state.camera.lookAt(0, 0, 0)
         }
     });

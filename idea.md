@@ -9,7 +9,7 @@ Included
 - Pet rock
 
 Commands (Tricks)
-- Sit        - camera pans down and tilts up
+- Stand      - camera pans down and tilts up
 - Down       - camera pans up and tilts down
 - Stay       - camera zooms out
 - Come       - camera zooms in
