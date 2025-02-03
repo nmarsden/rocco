@@ -109,7 +109,7 @@ export default function CameraControls() {
         }
     );
 
-    const { cameraRollOverDurationMSecs } = useControls(
+    const { cameraRollOverDurationMSecs, cameraRollOverPosition } = useControls(
         'CameraControls',
         {
             'RollOver': folder(
@@ -120,6 +120,10 @@ export default function CameraControls() {
                         min: 1000,
                         max: 10000,
                         step: 200
+                    },
+                    cameraRollOverPosition: {
+                        value: { x: 0, y: 0, z: 6 },
+                        label: 'position'
                     },
                     rollOver: button((get) => {
                         if (orbitControlsEnabled) {
@@ -256,16 +260,16 @@ export default function CameraControls() {
                     })
                 },
                 {
-                    collapsed: false
+                    collapsed: true
                 }
             )
         },
         {
-            collapsed: false
+            collapsed: true
         }
     );
 
-    useFrame(state => {
+    useFrame((state, delta) => {
         if (orbitControlsEnabled) {
             return;
         }
@@ -288,7 +292,12 @@ export default function CameraControls() {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraRollOverDurationMSecs;
 
-            state.camera.rotation.z = animationProgress * Math.PI * 2;
+            const easeInOut = easeInOutExpo(animationProgress)
+
+            desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraRollOverPosition, easeInOut);
+
+            state.camera.lookAt(0, 0, 0);
+            state.camera.rotateZ(animationProgress * Math.PI * 2);
         }
         if (cameraStand) {
             const elapsedTime = new Date() - cameraAnimationStartTime
