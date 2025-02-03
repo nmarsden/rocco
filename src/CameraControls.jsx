@@ -11,6 +11,8 @@ let cameraShaking = false;
 let cameraSpin = false;
 let cameraRollOver = false;
 let cameraStand = false;
+let cameraStay = false;
+let cameraCome = false;
 let cameraAnimationStartTime = new Date();
 
 // Source: https://nicmulvaney.com/easing
@@ -176,6 +178,84 @@ export default function CameraControls() {
                     })
                 },
                 {
+                    collapsed: true
+                }
+            )
+        },
+        {
+            collapsed: true
+        }
+    );
+
+    const { cameraStayDurationMSecs, cameraStayPosition } = useControls(
+        'CameraControls',
+        {
+            'Stay': folder(
+                {
+                    cameraStayDurationMSecs: {
+                        value: 6000,
+                        label: 'duration (msecs)',
+                        min: 1000,
+                        max: 10000,
+                        step: 200
+                    },
+                    cameraStayPosition: {
+                        value: { x: 0, y: 0, z: 25 },
+                        label: 'position'
+                    },
+                    stay: button((get) => {
+                        if (orbitControlsEnabled) {
+                            return;
+                        }
+                        cameraAnimationStartTime = new Date();
+                        cameraStay = true
+
+                        setTimeout(() => {
+                            cameraStay = false
+                            desiredCameraPosition.copy(defaultCameraPosition);
+                        }, get('CameraControls.Stay.cameraStayDurationMSecs'))
+                    })
+                },
+                {
+                    collapsed: true
+                }
+            )
+        },
+        {
+            collapsed: true
+        }
+    );
+
+    const { cameraComeDurationMSecs, cameraComePosition } = useControls(
+        'CameraControls',
+        {
+            'Come': folder(
+                {
+                    cameraComeDurationMSecs: {
+                        value: 6000,
+                        label: 'duration (msecs)',
+                        min: 1000,
+                        max: 10000,
+                        step: 200
+                    },
+                    cameraComePosition: {
+                        value: { x: 0, y: 0, z: 2.5 },
+                        label: 'position'
+                    },
+                    come: button((get) => {
+                        if (orbitControlsEnabled) {
+                            return;
+                        }
+                        cameraAnimationStartTime = new Date();
+                        cameraCome = true
+
+                        setTimeout(() => {
+                            cameraCome = false
+                            desiredCameraPosition.copy(defaultCameraPosition);
+                        }, get('CameraControls.Come.cameraComeDurationMSecs'))
+                    })
+                },
+                {
                     collapsed: false
                 }
             )
@@ -223,6 +303,22 @@ export default function CameraControls() {
             const targetZ = cameraStandLookAt.z * easeInOut;
 
             state.camera.lookAt(targetX, targetY, targetZ);
+        }
+        if (cameraStay) {
+            const elapsedTime = new Date() - cameraAnimationStartTime
+            const animationProgress = elapsedTime / cameraStayDurationMSecs;
+
+            const easeInOut = easeInOutExpo(animationProgress)
+
+            desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraStayPosition, easeInOut);
+        }
+        if (cameraCome) {
+            const elapsedTime = new Date() - cameraAnimationStartTime
+            const animationProgress = elapsedTime / cameraComeDurationMSecs;
+
+            const easeInOut = easeInOutExpo(animationProgress)
+
+            desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraComePosition, easeInOut);
         }
         state.camera.position.lerp(desiredCameraPosition, 0.1)
 
