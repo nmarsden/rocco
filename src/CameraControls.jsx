@@ -13,6 +13,23 @@ let cameraRollOver = false;
 let cameraStand = false;
 let cameraAnimationStartTime = new Date();
 
+// Source: https://nicmulvaney.com/easing
+function easeOutExpo(x) {
+    return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+function easeInOutExpo(x) {
+    if (x < 0.25) {
+        return easeOutExpo(x * 4);
+    }
+    if (x > 0.75) {
+        return 1 - easeOutExpo((x - 0.75) * 4);
+    }
+    else {
+        return 1;
+    }
+}
+
 export default function CameraControls() {
     const { orbitControlsEnabled } = useControls(
         'CameraControls',
@@ -125,7 +142,7 @@ export default function CameraControls() {
         }
     );
 
-    const { cameraStandDurationMSecs } = useControls(
+    const { cameraStandDurationMSecs, cameraStandPosition, cameraStandLookAt } = useControls(
         'CameraControls',
         {
             'Stand': folder(
@@ -136,6 +153,14 @@ export default function CameraControls() {
                         min: 1000,
                         max: 10000,
                         step: 200
+                    },
+                    cameraStandPosition: {
+                        value: { x: 0, y: -1, z: 3 },
+                        label: 'position'
+                    },
+                    cameraStandLookAt: {
+                        value: { x: 0, y: 1, z: -1 },
+                        label: 'lookAt'
                     },
                     stand: button((get) => {
                         if (orbitControlsEnabled) {
@@ -186,18 +211,21 @@ export default function CameraControls() {
             state.camera.rotation.z = animationProgress * Math.PI * 2;
         }
         if (cameraStand) {
-            // TODO Improve the stand animation. Perhaps use maath/ease ?
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraStandDurationMSecs;
 
-            desiredCameraPosition.y = defaultCameraPosition.y - ((defaultCameraPosition.y + 1) * Math.sin(animationProgress * Math.PI));
-            desiredCameraPosition.z = defaultCameraPosition.z - ((defaultCameraPosition.z - 2) * Math.sin(animationProgress * Math.PI));
+            const easeInOut = easeInOutExpo(animationProgress)
 
-            const targetY = Math.sin(animationProgress * Math.PI);
-            state.camera.lookAt(0, targetY, 0);
+            desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraStandPosition, easeInOut);
+
+            const targetX = cameraStandLookAt.x * easeInOut;
+            const targetY = cameraStandLookAt.y * easeInOut;
+            const targetZ = cameraStandLookAt.z * easeInOut;
+
+            state.camera.lookAt(targetX, targetY, targetZ);
         }
+        state.camera.position.lerp(desiredCameraPosition, 0.1)
 
-        state.camera.position.lerp(desiredCameraPosition, 0.05)
         if (!cameraShaking && !cameraRollOver && !cameraStand) {
             state.camera.lookAt(0, 0, 0)
         }
