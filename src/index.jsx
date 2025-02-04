@@ -18,7 +18,7 @@ root.render(
                 fov: 45,
                 near: 0.1,
                 far: 200,
-                position: [ 0, 0, 2 ]
+                position: [ 0, 0, 4 ]
             } }
             shadows={true}
         >
