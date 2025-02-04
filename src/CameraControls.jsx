@@ -1,4 +1,4 @@
-import {OrbitControls} from "@react-three/drei";
+import {OrbitControls, PerspectiveCamera} from "@react-three/drei";
 import {button, folder, useControls} from "leva";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
@@ -50,6 +50,34 @@ export default function CameraControls() {
             collapsed: true
         }
     );
+    const { aspect, fov, position } = useControls(
+        'CameraControls',
+        {
+            'Camera': folder(
+                {
+                    aspect: {
+                        value: 1,
+                        min: 0.1,
+                        max: 10,
+                        step: 0.1
+                    },
+                    fov: {
+                        value: 45,
+                        min: 0,
+                        max: 200,
+                        step: 5
+                    }
+                },
+                {
+                    collapsed: true
+                }
+            )
+        },
+        {
+            collapsed: true
+        }
+    );
+
     const { cameraShakeDurationMSecs, cameraShakeMaxAmplitude } = useControls(
         'CameraControls',
         {
@@ -340,6 +368,15 @@ export default function CameraControls() {
         <OrbitControls
             makeDefault={true}
             enabled={orbitControlsEnabled}
+        />
+        <PerspectiveCamera
+            makeDefault={true}
+            manual={true}
+            fov={fov}
+            near={0.1}
+            far={200}
+            aspect={aspect}
+            position={[0, 20, 0]}
         />
     </>
 }
