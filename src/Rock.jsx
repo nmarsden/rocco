@@ -9,7 +9,7 @@ export default function Rock() {
         {
             'Rock': folder(
                 {
-                    rockColor: {value: 'red', label: 'color'},
+                    rockColor: {value: '#b44141', label: 'color'},
                     rockRotationY: {value: 0, label: 'rotationY', min: -Math.PI, max: Math.PI},
                 },
                 {

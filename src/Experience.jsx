@@ -4,6 +4,7 @@ import Lights from "./Lights.jsx";
 import Background from "./Background.jsx";
 import Floor from "./Floor.jsx";
 import Rock from "./Rock.jsx";
+import DotScreenEffect from "./DotScreenEffect.jsx";
 
 export default function Experience() {
     return <>
@@ -13,5 +14,6 @@ export default function Experience() {
         <Background />
         <Floor />
         <Rock />
+        <DotScreenEffect />
     </>
 }

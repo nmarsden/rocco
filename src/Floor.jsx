@@ -6,7 +6,7 @@ export default function Floor() {
         {
             'Floor': folder(
                 {
-                    color: '#ffffff'
+                    color: '#cecece'
                 },
                 {
                     collapsed: true
