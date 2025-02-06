@@ -1,8 +1,8 @@
 import {folder, useControls} from "leva";
 
-export default function Floor() {
+export default function RockFloor() {
     const { color } = useControls(
-        'World',
+        'Rock World',
         {
             'Floor': folder(
                 {

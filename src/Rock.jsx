@@ -2,10 +2,10 @@ import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
 
 export default function Rock() {
-    const roccoModel = useGLTF('rocco.glb');
+    const model = useGLTF('rock.glb');
 
     const { rockColor, rockRotationY } = useControls(
-        'World',
+        'Rock World',
         {
             'Rock': folder(
                 {
@@ -25,7 +25,7 @@ export default function Rock() {
     return (
         <mesh
             rotation-y={rockRotationY}
-            geometry={roccoModel.scene.children[0].geometry}
+            geometry={model.scene.children[0].geometry}
             castShadow={true}
         >
             <meshStandardMaterial color={rockColor}/>
@@ -33,4 +33,4 @@ export default function Rock() {
     );
 }
 
-useGLTF.preload('rocco.glb')
+useGLTF.preload('rock.glb')

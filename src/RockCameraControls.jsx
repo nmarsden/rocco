@@ -32,7 +32,7 @@ function easeInOutExpo(x) {
     }
 }
 
-export default function CameraControls() {
+export default function RockCameraControls() {
     const { orbitControlsEnabled } = useControls(
         'CameraControls',
         {

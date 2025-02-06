@@ -1,12 +1,12 @@
 import {folder, useControls} from "leva";
 
-export default function Background() {
+export default function RockBackground() {
     const { color } = useControls(
-        'World',
+        'Rock World',
         {
             'Background': folder(
                 {
-                    color: '#eb9a6a'
+                    color: '#ebebeb'
                 },
                 {
                     collapsed: true

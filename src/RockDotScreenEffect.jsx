@@ -38,9 +38,9 @@ const BLEND_FUNCTIONS = {
     'VIVID_LIGHT': BlendFunction.VIVID_LIGHT,   // - Vivid light.
 };
 
-export default function DotScreenEffect() {
+export default function RockDotScreenEffect() {
     const { enabled, blendFunction, scale, lineWidth } = useControls(
-        'World',
+        'Rock World',
         {
             'DotScreenEffect': folder(
                 {
@@ -63,12 +63,12 @@ export default function DotScreenEffect() {
                     }
                 },
                 {
-                    collapsed: false
+                    collapsed: true
                 }
             )
         },
         {
-            collapsed: false
+            collapsed: true
         }
     );
 
