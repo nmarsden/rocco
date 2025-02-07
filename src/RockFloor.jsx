@@ -6,7 +6,7 @@ export default function RockFloor() {
         {
             'Floor': folder(
                 {
-                    color: '#cecece'
+                    color: '#b4b4b4'
                 },
                 {
                     collapsed: true

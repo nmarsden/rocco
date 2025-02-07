@@ -53,4 +53,5 @@ Resources
 - Dot Matrix shader example - https://www.airtightinteractive.com/demos/js/ledeffect/
 - Dot Screen effect - https://react-postprocessing.docs.pmnd.rs/effects/dot-screen
 - Grid effect - https://react-postprocessing.docs.pmnd.rs/effects/grid
+- Voxelizer - https://drububu.com/miscellaneous/voxelizer
 

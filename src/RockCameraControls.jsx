@@ -3,7 +3,7 @@ import {button, folder, useControls} from "leva";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 
-const defaultCameraPosition = new THREE.Vector3(0, 3, 6);
+const defaultCameraPosition = new THREE.Vector3(0, 3, 8);
 const desiredCameraPosition = new THREE.Vector3();
 desiredCameraPosition.copy(defaultCameraPosition);
 
@@ -189,11 +189,11 @@ export default function RockCameraControls() {
                         step: 200
                     },
                     cameraStandPosition: {
-                        value: { x: 0, y: -1, z: 3 },
+                        value: { x: 0, y: -1.4, z: 4 },
                         label: 'position'
                     },
                     cameraStandLookAt: {
-                        value: { x: 0, y: 1, z: -1 },
+                        value: { x: 0, y: 3, z: -3.5 },
                         label: 'lookAt'
                     },
                     stand: button((get) => {
@@ -271,7 +271,7 @@ export default function RockCameraControls() {
                         step: 200
                     },
                     cameraComePosition: {
-                        value: { x: 0, y: 0, z: 2.5 },
+                        value: { x: 0, y: 1, z: 5 },
                         label: 'position'
                     },
                     come: button((get) => {
