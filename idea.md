@@ -35,6 +35,10 @@ Customize
 - size:
 - shape: 
 
+Game Mode
+- play Rock, Paper, Scissors
+- Rock always chooses Rock
+
 Reasons to own
 - Clean and undemanding
 - Incredibly low food bills

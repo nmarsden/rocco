@@ -1,13 +1,9 @@
 import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
+import RockEyes from "./RockEyes.jsx";
 
 export default function Rock() {
     const model = useGLTF('rock_10x10x10.glb');
-    // const model = useGLTF('ball.glb');
-    // const model = useGLTF('ball_48x48x48.glb');
-    // const model = useGLTF('rock.glb');
-
-    console.log('model=', model);
 
     const { rockColor, rockRotationY, scale } = useControls(
         'Rock World',
@@ -37,11 +33,9 @@ export default function Rock() {
             receiveShadow={true}
         >
             <meshStandardMaterial color={rockColor}/>
+            <RockEyes />
         </mesh>
     );
 }
 
 useGLTF.preload('rock_10x10x10.glb')
-// useGLTF.preload('ball.glb')
-// useGLTF.preload('ball_48x48x48.glb')
-// useGLTF.preload('rock.glb')
