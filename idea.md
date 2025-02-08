@@ -58,4 +58,5 @@ Resources
 - Dot Screen effect - https://react-postprocessing.docs.pmnd.rs/effects/dot-screen
 - Grid effect - https://react-postprocessing.docs.pmnd.rs/effects/grid
 - Voxelizer - https://drububu.com/miscellaneous/voxelizer
+- Text Image Generator - https://www.coolgenerator.com/text-image-generator
 

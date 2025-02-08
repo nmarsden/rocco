@@ -1,5 +1,6 @@
 import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
+import RoccoText from "./RoccoText.jsx";
 
 export default function Case() {
     const model = useGLTF('case.glb');
@@ -34,6 +35,7 @@ export default function Case() {
                 metalness={metalness}
                 color={caseColor}
             />
+            <RoccoText/>
         </mesh>
     );
 }
