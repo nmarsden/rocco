@@ -9,7 +9,7 @@ export default function Case() {
         {
             'Case': folder(
                 {
-                    caseColor: {value: '#408abe', label: 'color'},
+                    caseColor: {value: '#b43f3a', label: 'color'},
                     roughness: {value: 0.0, label: 'roughness', min: 0, max: 10, step: 0.1},
                     metalness: {value: 0.45, label: 'metalness', min: 0, max: 10, step: 0.1},
                 },

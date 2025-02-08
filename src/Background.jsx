@@ -6,7 +6,7 @@ export default function Background() {
         {
             'Background': folder(
                 {
-                    color: '#eb9a6a'
+                    color: '#65cdf2'
                 },
                 {
                     collapsed: true
