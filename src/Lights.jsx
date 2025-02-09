@@ -8,12 +8,12 @@ export default function Lights() {
                 {
                     'Ambient': folder({
                         ambientColor: {value: '#ffffff', label: 'color'},
-                        ambientIntensity: {value: 7.0, label: 'intensity', min: 0, max: 10}
+                        ambientIntensity: {value: 4.0, label: 'intensity', min: 0, max: 10}
                     }),
                     'Directional': folder({
                         directionalColor: {value: '#ffffff', label: 'color'},
                         directionalPosition: {value: [3, 3, 1], label: 'position'},
-                        directionalIntensity: {value: 6.5, label: 'intensity', min: 0, max: 10}
+                        directionalIntensity: {value: 4.0, label: 'intensity', min: 0, max: 10}
                     })
                 },
                 {
