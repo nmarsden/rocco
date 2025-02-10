@@ -9,6 +9,11 @@ const buttonMaterial = new THREE.MeshStandardMaterial({
     roughness: 0.0,
     metalness: 0.45
 })
+const modeButtonMaterial = new THREE.MeshStandardMaterial({
+    color: '#52b4de',
+    roughness: 0.0,
+    metalness: 0.45
+})
 
 export default function Case() {
     const { nodes} = useGLTF('case.glb', false)
@@ -18,9 +23,11 @@ export default function Case() {
         {
             'Case': folder(
                 {
-                    caseColor: {value: '#be3b37', label: 'case color'},
-                    roughness: {value: 0.0, label: 'roughness', min: 0, max: 10, step: 0.1},
-                    metalness: {value: 0.45, label: 'metalness', min: 0, max: 10, step: 0.1},
+                    caseColor: { value: '#be3b37', label: 'case color' },
+                    buttonColor: { value: '#e2d9d9', label: 'button color', onChange: value => buttonMaterial.color.set(value) },
+                    modeButtonColor: { value: '#52b4de', label: 'mode button color', onChange: value => modeButtonMaterial.color.set(value) },
+                    roughness: { value: 0.0, label: 'roughness', min: 0, max: 10, step: 0.1 },
+                    metalness: { value: 0.45, label: 'metalness', min: 0, max: 10, step: 0.1 },
                 },
                 {
                     collapsed: true
@@ -51,6 +58,7 @@ export default function Case() {
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Left_Button.geometry} material={buttonMaterial}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Right_Button.geometry} material={buttonMaterial}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Up_Button.geometry} material={buttonMaterial}/>
+            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Mode_Button.geometry} material={modeButtonMaterial}/>
         </group>
     );
 }

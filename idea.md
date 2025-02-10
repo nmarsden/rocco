@@ -47,6 +47,45 @@ Reasons to own
 - Surprisingly easy to train
 - Quiet to a fault
 
+Mode Button
+- toggles between modes: Sleep?, Camera, Trick, Game & Settings
+ 
+Camera Mode
+- allows camera control
+- CENTER
+- UP
+- DOWN
+- LEFT
+- RIGHT
+
+Trick Mode
+- CENTER
+- UP
+- DOWN
+- LEFT
+- RIGHT
+
+Game Mode
+- play Rock Paper Scissors
+- CENTER
+- UP
+- DOWN
+- LEFT
+- RIGHT
+
+Settings Mode
+- Shows a settings menu
+- CENTER
+- UP
+- DOWN
+- LEFT
+- RIGHT
+
+ROCCO acronyms
+- Ridiculously Outrageous Cuddly Crystal Outcast
+- Really Odd Completely Calm Object
+- Rock Of Constant Comical Observation
+
 Resources
 - Seize the Play (youtube) - https://www.youtube.com/watch?v=Ah6BYMhE-Mc
 - The care and training of your pet rock (internet archive) - https://archive.org/details/pet_rock_manual_original/mode/2up
