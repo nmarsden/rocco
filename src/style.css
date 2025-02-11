@@ -12,5 +12,6 @@ body,
 
 /* Leva */
 :root {
-    --leva-sizes-rootWidth: 350px !important;
+    --leva-sizes-rootWidth: 400px !important;
+    --leva-sizes-controlWidth: 240px !important;
 }

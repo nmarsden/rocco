@@ -9,6 +9,7 @@ import RockBackground from "./RockBackground.jsx";
 import RockFloor from "./RockFloor.jsx";
 import Rock from "./Rock.jsx";
 import RockDotScreenEffect from "./RockDotScreenEffect.jsx";
+import ModeText from "./ModeText.jsx";
 
 export default function Experience() {
     return <>
@@ -21,7 +22,9 @@ export default function Experience() {
             <planeGeometry/>
             <meshBasicMaterial>
                 <RenderTexture attach="map">
-                    <RockCameraControls/>
+                    <RockCameraControls>
+                        <ModeText/>
+                    </RockCameraControls>
                     <RockLights/>
                     <RockBackground/>
                     <RockFloor/>

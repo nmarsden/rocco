@@ -99,5 +99,5 @@ Resources
 - Voxelizer - https://drububu.com/miscellaneous/voxelizer
 - Text Image Generator - https://www.coolgenerator.com/text-image-generator
 - How to model buttons - https://www.youtube.com/watch?v=RLo8Al887pE
- 
-
+- Pacman Thing - https://www.youtube.com/watch?v=VRDjFzwY0ZM
+- Convert font to typeface.js - https://gero3.github.io/facetype.js/

@@ -32,7 +32,7 @@ function easeInOutExpo(x) {
     }
 }
 
-export default function RockCameraControls() {
+export default function RockCameraControls({ children }) {
     const { orbitControlsEnabled } = useControls(
         'CameraControls',
         {
@@ -377,6 +377,8 @@ export default function RockCameraControls() {
             far={200}
             aspect={aspect}
             position={[0, 20, 0]}
-        />
+        >
+            {children}
+        </PerspectiveCamera>
     </>
 }
