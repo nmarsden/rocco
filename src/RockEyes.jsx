@@ -3,7 +3,7 @@ import {folder, useControls} from "leva";
 import React from "react";
 
 export default function RockEyes() {
-    const { nodes, materials } = useGLTF('eye_10x10x4.glb', false)
+    const { nodes, materials } = useGLTF('models/eye_10x10x4.glb', false)
 
     const { positionY, positionZ, offsetX, rotationZ, scale } = useControls(
         'Rock World',
@@ -52,4 +52,4 @@ export default function RockEyes() {
     );
 }
 
-useGLTF.preload('eye_10x10x4.glb', false)
+useGLTF.preload('models/eye_10x10x4.glb', false)

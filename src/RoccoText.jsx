@@ -2,7 +2,7 @@ import {Decal, useTexture} from "@react-three/drei";
 import {folder, useControls} from "leva";
 
 export default function RoccoText() {
-    const texture = useTexture('rocco_text.png');
+    const texture = useTexture('textures/rocco_text.png');
 
     const { visible, scale, position, polygonOffsetFactor, polygonOffsetUnits } = useControls(
         'World',
@@ -45,4 +45,4 @@ export default function RoccoText() {
     );
 }
 
-useTexture.preload('rocco_text.png')
+useTexture.preload('textures/rocco_text.png')

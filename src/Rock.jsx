@@ -4,7 +4,7 @@ import RockHair from "./RockHair.jsx";
 import RockEyes from "./RockEyes.jsx";
 
 export default function Rock() {
-    const model = useGLTF('rock_10x10x10.glb', false);
+    const model = useGLTF('models/rock_10x10x10.glb', false);
 
     const { rockColor, rockRotationY, scale } = useControls(
         'Rock World',
@@ -40,4 +40,4 @@ export default function Rock() {
     );
 }
 
-useGLTF.preload('rock_10x10x10.glb', false)
+useGLTF.preload('models/rock_10x10x10.glb', false)

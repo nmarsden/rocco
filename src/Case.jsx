@@ -16,7 +16,7 @@ const modeButtonMaterial = new THREE.MeshStandardMaterial({
 })
 
 export default function Case() {
-    const { nodes} = useGLTF('case.glb', false)
+    const { nodes} = useGLTF('models/case.glb', false)
 
     const { caseColor, buttonColor, roughness, metalness } = useControls(
         'World',
@@ -63,4 +63,4 @@ export default function Case() {
     );
 }
 
-useGLTF.preload('case.glb', false)
+useGLTF.preload('models/case.glb', false)

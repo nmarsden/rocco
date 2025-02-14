@@ -3,7 +3,7 @@ import {folder, useControls} from "leva";
 import React from "react";
 
 export default function RockHair() {
-    const model = useGLTF('hair_10x5x10.glb', false)
+    const model = useGLTF('models/hair_10x5x10.glb', false)
 
     const { color, positionY, positionZ, rotationY, scale } = useControls(
         'Rock World',
@@ -41,4 +41,4 @@ export default function RockHair() {
     );
 }
 
-useGLTF.preload('hair_10x5x10.glb', false)
+useGLTF.preload('models/hair_10x5x10.glb', false)
