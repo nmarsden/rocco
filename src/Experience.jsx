@@ -1,15 +1,15 @@
-import Performance from "./Performance.jsx";
+import Performance from "./components/Performance.jsx";
 import {OrbitControls, RenderTexture} from "@react-three/drei";
-import Background from "./Background.jsx";
-import Lights from "./Lights.jsx";
-import Case from "./Case.jsx";
-import RockCameraControls from "./RockCameraControls.jsx";
-import RockLights from "./RockLights.jsx";
-import RockBackground from "./RockBackground.jsx";
-import RockFloor from "./RockFloor.jsx";
-import Rock from "./Rock.jsx";
-import RockDotScreenEffect from "./RockDotScreenEffect.jsx";
-import ModeText from "./ModeText.jsx";
+import Background from "./components/Background.jsx";
+import Lights from "./components/Lights.jsx";
+import Case from "./components/handheld/Case.jsx";
+import RockCameraControls from "./components/rock-world/RockCameraControls.jsx";
+import RockLights from "./components/rock-world/RockLights.jsx";
+import RockBackground from "./components/rock-world/RockBackground.jsx";
+import RockFloor from "./components/rock-world/RockFloor.jsx";
+import Rock from "./components/rock-world/rock/Rock.jsx";
+import RockDotScreenEffect from "./components/rock-world/RockDotScreenEffect.jsx";
+import ModeText from "./components/rock-world/hud/ModeText.jsx";
 
 export default function Experience() {
     return <>
