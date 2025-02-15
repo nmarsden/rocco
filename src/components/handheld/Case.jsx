@@ -3,6 +3,7 @@ import {folder, useControls} from "leva";
 import RoccoText from "./RoccoText.jsx";
 import React from "react";
 import * as THREE from "three";
+import useRockState from "../../stores/useRockState.js";
 
 const buttonMaterial = new THREE.MeshStandardMaterial({
     color: '#e2d9d9',
@@ -17,8 +18,12 @@ const modeButtonMaterial = new THREE.MeshStandardMaterial({
 
 export default function Case() {
     const { nodes} = useGLTF('models/case.glb', false)
+    const toggleMode = useRockState((state) => state.toggleMode)
+    const selectMenuItem = useRockState((state) => state.selectMenuItem)
+    const previousMenuItem = useRockState((state) => state.previousMenuItem)
+    const nextMenuItem = useRockState((state) => state.nextMenuItem)
 
-    const { caseColor, buttonColor, roughness, metalness } = useControls(
+    const { caseColor, roughness, metalness } = useControls(
         'World',
         {
             'Case': folder(
@@ -53,12 +58,12 @@ export default function Case() {
                 />
                 <RoccoText/>
             </mesh>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Center_Button.geometry} material={buttonMaterial}/>
+            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Center_Button.geometry} material={buttonMaterial} onClick={selectMenuItem}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Down_Button.geometry} material={buttonMaterial}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Left_Button.geometry} material={buttonMaterial}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Right_Button.geometry} material={buttonMaterial}/>
+            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Left_Button.geometry} material={buttonMaterial} onClick={previousMenuItem}/>
+            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Right_Button.geometry} material={buttonMaterial} onClick={nextMenuItem}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Up_Button.geometry} material={buttonMaterial}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Mode_Button.geometry} material={modeButtonMaterial}/>
+            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Mode_Button.geometry} material={modeButtonMaterial} onClick={toggleMode}/>
         </group>
     );
 }

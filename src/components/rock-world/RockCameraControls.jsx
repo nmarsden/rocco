@@ -2,17 +2,17 @@ import {OrbitControls, PerspectiveCamera} from "@react-three/drei";
 import {button, folder, useControls} from "leva";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
+import useRockState from "../../stores/useRockState.js";
+import {useEffect} from "react";
 
 const defaultCameraPosition = new THREE.Vector3(0, 3, 8);
 const desiredCameraPosition = new THREE.Vector3();
 desiredCameraPosition.copy(defaultCameraPosition);
 
-let cameraShaking = false;
-let cameraSpin = false;
-let cameraRollOver = false;
-let cameraStand = false;
-let cameraStay = false;
-let cameraCome = false;
+const LOOK_AT_MODES = ['NONE', 'SPIN', 'STAY', 'COME']
+
+let cameraMode = 'NONE'
+
 let cameraAnimationStartTime = new Date();
 
 // Source: https://nicmulvaney.com/easing
@@ -33,6 +33,22 @@ function easeInOutExpo(x) {
 }
 
 export default function RockCameraControls({ children }) {
+    const trick = useRockState((state) => state.trick)
+    const unselectMenuItem = useRockState((state) => state.unselectMenuItem)
+
+    const toggleCameraMode = (trick, durationMsecs) => {
+        if (orbitControlsEnabled) {
+            return;
+        }
+        cameraAnimationStartTime = new Date();
+        cameraMode = trick
+
+        setTimeout(() => {
+            cameraMode = 'NONE'
+            desiredCameraPosition.copy(defaultCameraPosition);
+        }, durationMsecs)
+    }
+
     const { orbitControlsEnabled } = useControls(
         'CameraControls',
         {
@@ -84,19 +100,7 @@ export default function RockCameraControls({ children }) {
             'Shake': folder(
                 {
                     cameraShakeDurationMSecs: {value: 3000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200},
-                    cameraShakeMaxAmplitude: {value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25},
-                    shake: button((get) => {
-                        if (orbitControlsEnabled) {
-                            return;
-                        }
-                        cameraAnimationStartTime = new Date();
-                        cameraShaking = true
-
-                        setTimeout(() => {
-                            cameraShaking = false
-                            desiredCameraPosition.copy(defaultCameraPosition);
-                        }, get('CameraControls.Shake.cameraShakeDurationMSecs'))
-                    })
+                    cameraShakeMaxAmplitude: {value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25}
                 },
                 {
                     collapsed: true
@@ -113,19 +117,7 @@ export default function RockCameraControls({ children }) {
         {
             'Spin': folder(
                 {
-                    cameraSpinDurationMSecs: {value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200},
-                    spin: button((get) => {
-                        if (orbitControlsEnabled) {
-                            return;
-                        }
-                        cameraAnimationStartTime = new Date();
-                        cameraSpin = true
-
-                        setTimeout(() => {
-                            cameraSpin = false
-                            desiredCameraPosition.copy(defaultCameraPosition);
-                        }, get('CameraControls.Spin.cameraSpinDurationMSecs'))
-                    })
+                    cameraSpinDurationMSecs: {value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200}
                 },
                 {
                     collapsed: true
@@ -152,19 +144,7 @@ export default function RockCameraControls({ children }) {
                     cameraRollOverPosition: {
                         value: { x: 0, y: 0, z: 6 },
                         label: 'position'
-                    },
-                    rollOver: button((get) => {
-                        if (orbitControlsEnabled) {
-                            return;
-                        }
-                        cameraAnimationStartTime = new Date();
-                        cameraRollOver = true
-
-                        setTimeout(() => {
-                            cameraRollOver = false
-                            desiredCameraPosition.copy(defaultCameraPosition);
-                        }, get('CameraControls.RollOver.cameraRollOverDurationMSecs'))
-                    })
+                    }
                 },
                 {
                     collapsed: true
@@ -195,19 +175,7 @@ export default function RockCameraControls({ children }) {
                     cameraStandLookAt: {
                         value: { x: 0, y: 3, z: -3.5 },
                         label: 'lookAt'
-                    },
-                    stand: button((get) => {
-                        if (orbitControlsEnabled) {
-                            return;
-                        }
-                        cameraAnimationStartTime = new Date();
-                        cameraStand = true
-
-                        setTimeout(() => {
-                            cameraStand = false
-                            desiredCameraPosition.copy(defaultCameraPosition);
-                        }, get('CameraControls.Stand.cameraStandDurationMSecs'))
-                    })
+                    }
                 },
                 {
                     collapsed: true
@@ -234,19 +202,7 @@ export default function RockCameraControls({ children }) {
                     cameraStayPosition: {
                         value: { x: 0, y: 0, z: 25 },
                         label: 'position'
-                    },
-                    stay: button((get) => {
-                        if (orbitControlsEnabled) {
-                            return;
-                        }
-                        cameraAnimationStartTime = new Date();
-                        cameraStay = true
-
-                        setTimeout(() => {
-                            cameraStay = false
-                            desiredCameraPosition.copy(defaultCameraPosition);
-                        }, get('CameraControls.Stay.cameraStayDurationMSecs'))
-                    })
+                    }
                 },
                 {
                     collapsed: true
@@ -273,19 +229,7 @@ export default function RockCameraControls({ children }) {
                     cameraComePosition: {
                         value: { x: 0, y: 1, z: 5 },
                         label: 'position'
-                    },
-                    come: button((get) => {
-                        if (orbitControlsEnabled) {
-                            return;
-                        }
-                        cameraAnimationStartTime = new Date();
-                        cameraCome = true
-
-                        setTimeout(() => {
-                            cameraCome = false
-                            desiredCameraPosition.copy(defaultCameraPosition);
-                        }, get('CameraControls.Come.cameraComeDurationMSecs'))
-                    })
+                    }
                 },
                 {
                     collapsed: true
@@ -297,18 +241,30 @@ export default function RockCameraControls({ children }) {
         }
     );
 
+    useEffect(() => {
+        if (trick === 'NONE') return
+        if (trick === 'SHAKE') toggleCameraMode('SHAKE', cameraShakeDurationMSecs)
+        if (trick === 'SPIN') toggleCameraMode('SPIN', cameraSpinDurationMSecs)
+        if (trick === 'ROLLOVER') toggleCameraMode('ROLLOVER', cameraRollOverDurationMSecs)
+        if (trick === 'STAND') toggleCameraMode('STAND', cameraStandDurationMSecs)
+        if (trick === 'STAY') toggleCameraMode('STAY', cameraStayDurationMSecs)
+        if (trick === 'COME') toggleCameraMode('COME', cameraComeDurationMSecs)
+
+        unselectMenuItem()
+    }, [trick]);
+
     useFrame((state, delta) => {
         if (orbitControlsEnabled) {
             return;
         }
-        if (cameraShaking) {
+        if (cameraMode === 'SHAKE') {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraShakeDurationMSecs;
             const cameraShakeAmplitude = cameraShakeMaxAmplitude * Math.sin(animationProgress * Math.PI);
 
             desiredCameraPosition.x = cameraShakeAmplitude * Math.sin(0.01 * elapsedTime)
         }
-        if (cameraSpin) {
+        if (cameraMode === 'SPIN') {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraSpinDurationMSecs;
 
@@ -316,7 +272,7 @@ export default function RockCameraControls({ children }) {
             desiredCameraPosition.z = 6 * Math.cos(animationProgress * Math.PI * 2);
             desiredCameraPosition.y = 0
         }
-        if (cameraRollOver) {
+        if (cameraMode === 'ROLLOVER') {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraRollOverDurationMSecs;
 
@@ -327,7 +283,7 @@ export default function RockCameraControls({ children }) {
             state.camera.lookAt(0, 0, 0);
             state.camera.rotateZ(animationProgress * Math.PI * 2);
         }
-        if (cameraStand) {
+        if (cameraMode === 'STAND') {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraStandDurationMSecs;
 
@@ -341,7 +297,7 @@ export default function RockCameraControls({ children }) {
 
             state.camera.lookAt(targetX, targetY, targetZ);
         }
-        if (cameraStay) {
+        if (cameraMode === 'STAY') {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraStayDurationMSecs;
 
@@ -349,7 +305,7 @@ export default function RockCameraControls({ children }) {
 
             desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraStayPosition, easeInOut);
         }
-        if (cameraCome) {
+        if (cameraMode === 'COME') {
             const elapsedTime = new Date() - cameraAnimationStartTime
             const animationProgress = elapsedTime / cameraComeDurationMSecs;
 
@@ -359,7 +315,7 @@ export default function RockCameraControls({ children }) {
         }
         state.camera.position.lerp(desiredCameraPosition, 0.1)
 
-        if (!cameraShaking && !cameraRollOver && !cameraStand) {
+        if (LOOK_AT_MODES.includes(cameraMode)) {
             state.camera.lookAt(0, 0, 0)
         }
     });

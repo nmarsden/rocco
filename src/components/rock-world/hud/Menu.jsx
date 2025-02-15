@@ -2,12 +2,12 @@ import {Text} from "@react-three/drei";
 import {folder, useControls} from "leva";
 import useRockState from "../../../stores/useRockState.js";
 
-export default function ModeText() {
-    const mode = useRockState((state) => state.mode)
+export default function Menu() {
+    const menuItem = useRockState((state) => state.menuItem)
     const { visible, font, color, outlineColor, outlineWidth, scale, position } = useControls(
         'HUD',
         {
-            'Mode Text': folder(
+            'Menu': folder(
                 {
                     visible: true,
                     font: {
@@ -18,7 +18,7 @@ export default function ModeText() {
                     outlineColor: 'grey',
                     outlineWidth: { value: 0.025, min: 0, max: 5, step: 0.001 },
                     scale: { value: 0.06, min: 0, max: 5, step: 0.001 },
-                    position: [-0.27, 0.21, -0.7],
+                    position: [-0.27, -0.28, -0.7],
                 },
                 {
                     collapsed: true
@@ -42,7 +42,7 @@ export default function ModeText() {
             position={position}
             scale={scale}
         >
-            {mode}
+            {menuItem}
         </Text>
     );
 }

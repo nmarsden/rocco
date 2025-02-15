@@ -9,7 +9,7 @@ import RockBackground from "./components/rock-world/RockBackground.jsx";
 import RockFloor from "./components/rock-world/RockFloor.jsx";
 import Rock from "./components/rock-world/rock/Rock.jsx";
 import RockDotScreenEffect from "./components/rock-world/RockDotScreenEffect.jsx";
-import ModeText from "./components/rock-world/hud/ModeText.jsx";
+import Hud from "./components/rock-world/hud/Hud.jsx";
 
 export default function Experience() {
     return <>
@@ -23,7 +23,7 @@ export default function Experience() {
             <meshBasicMaterial>
                 <RenderTexture attach="map">
                     <RockCameraControls>
-                        <ModeText/>
+                        <Hud/>
                     </RockCameraControls>
                     <RockLights/>
                     <RockBackground/>
