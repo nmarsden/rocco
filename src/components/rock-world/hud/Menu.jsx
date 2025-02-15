@@ -56,7 +56,7 @@ export default function Menu() {
                 opacity: 0.5,
             },
             {
-                text: `[${menuItems[index]}]`,
+                text: menuItems[index],
                 positionX: 0,
                 opacity: 1,
             },
@@ -66,6 +66,22 @@ export default function Menu() {
                 opacity: 0.5,
             },
         ]
+        if (menuItems.length >= 5) {
+            const previousIndex2 = (previousIndex === 0) ? menuItems.length - 1 : (previousIndex - 1)
+            const previousPositionX2 = -((menuItemWidths[index] * 0.5) + gap + menuItemWidths[previousIndex] + gap + (menuItemWidths[previousIndex2] * 0.5))
+            texts.unshift({
+                text: menuItems[previousIndex2],
+                positionX: previousPositionX2,
+                opacity: 0.5,
+            })
+            const nextIndex2 = (index + 2) % menuItems.length
+            const nextPositionX2 = (menuItemWidths[index] * 0.5) + gap + menuItemWidths[nextIndex] + gap + (menuItemWidths[nextIndex2] * 0.5)
+            texts.push({
+                text: menuItems[nextIndex2],
+                positionX: nextPositionX2,
+                opacity: 0.5,
+            })
+        }
         setTexts(texts)
     }, [menuItem, menuItems, menuItemWidths, scale])
 
