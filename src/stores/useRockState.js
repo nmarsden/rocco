@@ -4,7 +4,7 @@ import { subscribeWithSelector } from 'zustand/middleware'
 const TRICK_MENU_ITEMS = [
     'SHAKE',
     'SPIN',
-    'ROLLOVER',
+    'ROLL',
     'STAND',
     'STAY',
     'COME'

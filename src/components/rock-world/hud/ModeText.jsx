@@ -17,8 +17,8 @@ export default function ModeText() {
                     color: 'black',
                     outlineColor: 'grey',
                     outlineWidth: { value: 0.025, min: 0, max: 5, step: 0.001 },
-                    scale: { value: 0.06, min: 0, max: 5, step: 0.001 },
-                    position: [-0.27, 0.21, -0.7],
+                    scale: { value: 0.03, min: 0, max: 5, step: 0.001 },
+                    position: [-0.27, 0.28, -0.7],
                 },
                 {
                     collapsed: true
@@ -38,11 +38,11 @@ export default function ModeText() {
             outlineColor={outlineColor}
             outlineWidth={outlineWidth}
             anchorX="left"
-            anchorY="bottom"
+            anchorY="top"
             position={position}
             scale={scale}
         >
-            {mode}
+            {`${mode} MODE`}
         </Text>
     );
 }

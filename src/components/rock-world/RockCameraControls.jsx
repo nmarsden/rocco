@@ -14,6 +14,7 @@ const LOOK_AT_MODES = ['NONE', 'SPIN', 'STAY', 'COME']
 let cameraMode = 'NONE'
 
 let cameraAnimationStartTime = new Date();
+let cameraAnimationTimeoutId;
 
 // Source: https://nicmulvaney.com/easing
 function easeOutExpo(x) {
@@ -40,10 +41,12 @@ export default function RockCameraControls({ children }) {
         if (orbitControlsEnabled) {
             return;
         }
+        clearTimeout(cameraAnimationTimeoutId)
         cameraAnimationStartTime = new Date();
+        desiredCameraPosition.copy(defaultCameraPosition);
         cameraMode = trick
 
-        setTimeout(() => {
+        cameraAnimationTimeoutId = setTimeout(() => {
             cameraMode = 'NONE'
             desiredCameraPosition.copy(defaultCameraPosition);
         }, durationMsecs)
@@ -129,19 +132,19 @@ export default function RockCameraControls({ children }) {
         }
     );
 
-    const { cameraRollOverDurationMSecs, cameraRollOverPosition } = useControls(
+    const { cameraRollDurationMSecs, cameraRollPosition } = useControls(
         'CameraControls',
         {
-            'RollOver': folder(
+            'Roll': folder(
                 {
-                    cameraRollOverDurationMSecs: {
+                    cameraRollDurationMSecs: {
                         value: 2000,
                         label: 'duration (msecs)',
                         min: 1000,
                         max: 10000,
                         step: 200
                     },
-                    cameraRollOverPosition: {
+                    cameraRollPosition: {
                         value: { x: 0, y: 0, z: 6 },
                         label: 'position'
                     }
@@ -245,7 +248,7 @@ export default function RockCameraControls({ children }) {
         if (trick === 'NONE') return
         if (trick === 'SHAKE') toggleCameraMode('SHAKE', cameraShakeDurationMSecs)
         if (trick === 'SPIN') toggleCameraMode('SPIN', cameraSpinDurationMSecs)
-        if (trick === 'ROLLOVER') toggleCameraMode('ROLLOVER', cameraRollOverDurationMSecs)
+        if (trick === 'ROLL') toggleCameraMode('ROLL', cameraRollDurationMSecs)
         if (trick === 'STAND') toggleCameraMode('STAND', cameraStandDurationMSecs)
         if (trick === 'STAY') toggleCameraMode('STAY', cameraStayDurationMSecs)
         if (trick === 'COME') toggleCameraMode('COME', cameraComeDurationMSecs)
@@ -272,13 +275,13 @@ export default function RockCameraControls({ children }) {
             desiredCameraPosition.z = 6 * Math.cos(animationProgress * Math.PI * 2);
             desiredCameraPosition.y = 0
         }
-        if (cameraMode === 'ROLLOVER') {
+        if (cameraMode === 'ROLL') {
             const elapsedTime = new Date() - cameraAnimationStartTime
-            const animationProgress = elapsedTime / cameraRollOverDurationMSecs;
+            const animationProgress = elapsedTime / cameraRollDurationMSecs;
 
             const easeInOut = easeInOutExpo(animationProgress)
 
-            desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraRollOverPosition, easeInOut);
+            desiredCameraPosition.lerpVectors(defaultCameraPosition, cameraRollPosition, easeInOut);
 
             state.camera.lookAt(0, 0, 0);
             state.camera.rotateZ(animationProgress * Math.PI * 2);
