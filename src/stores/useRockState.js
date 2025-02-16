@@ -11,9 +11,9 @@ const TRICK_MENU_ITEMS = [
 ]
 
 const GAME_MENU_ITEMS = [
-    'ROCK',
     'PAPER',
-    'SCISSORS'
+    'SCISSORS',
+    'ROCK'
 ]
 
 export default create(subscribeWithSelector((set) =>
@@ -23,19 +23,21 @@ export default create(subscribeWithSelector((set) =>
         menuItems: TRICK_MENU_ITEMS,
         menuItem: TRICK_MENU_ITEMS[0],
         trick: 'NONE',
+        shoot: 'NONE',
 
         toggleMode: () =>
         {
             set((state) =>
             {
-                if(state.mode === 'TRICK') return { mode: 'GAME', menuItems: GAME_MENU_ITEMS, menuItem: GAME_MENU_ITEMS[0] }
-                if(state.mode === 'GAME') return { mode: 'TRICK', menuItems: TRICK_MENU_ITEMS, menuItem: TRICK_MENU_ITEMS[0] }
+                if(state.mode === 'TRICK') return { mode: 'GAME', menuItems: GAME_MENU_ITEMS, menuItem: GAME_MENU_ITEMS[0], trick: 'NONE', shoot: 'NONE' }
+                if(state.mode === 'GAME') return { mode: 'TRICK', menuItems: TRICK_MENU_ITEMS, menuItem: TRICK_MENU_ITEMS[0], trick: 'NONE', shoot: 'NONE' }
             })
         },
         selectMenuItem: () => {
             set((state) =>
             {
                 if (state.mode === 'TRICK') return { trick: state.menuItem }
+                if (state.mode === 'GAME') return { shoot: state.menuItem }
                 return {}
             })
         },
@@ -43,6 +45,7 @@ export default create(subscribeWithSelector((set) =>
             set((state) =>
             {
                 if (state.mode === 'TRICK') return { trick: 'NONE' }
+                if (state.mode === 'GAME') return { shoot: 'NONE' }
                 return {}
             })
         },
@@ -51,7 +54,7 @@ export default create(subscribeWithSelector((set) =>
             {
                 let index = state.menuItems.indexOf(state.menuItem);
                 const nextIndex = (index + 1) % state.menuItems.length
-                return { menuItem: state.menuItems[nextIndex]};
+                return { menuItem: state.menuItems[nextIndex], shoot: 'NONE' };
             })
         },
         previousMenuItem: () => {
@@ -59,7 +62,7 @@ export default create(subscribeWithSelector((set) =>
             {
                 let index = state.menuItems.indexOf(state.menuItem);
                 const previousIndex = (index === 0) ? state.menuItems.length - 1 : (index - 1)
-                return { menuItem: state.menuItems[previousIndex]};
+                return { menuItem: state.menuItems[previousIndex], shoot: 'NONE' };
             })
         }
 
