@@ -101,3 +101,5 @@ Resources
 - How to model buttons - https://www.youtube.com/watch?v=RLo8Al887pE
 - Pacman Thing - https://www.youtube.com/watch?v=VRDjFzwY0ZM
 - Convert font to typeface.js - https://gero3.github.io/facetype.js/
+- Free Casual Game Sounds - https://dustyroom.com/free-casual-game-sounds
+- Convert WAV to WEBM - https://www.freeconvert.com/wav-to-webm

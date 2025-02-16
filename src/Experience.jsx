@@ -1,5 +1,6 @@
 import Performance from "./components/Performance.jsx";
 import {OrbitControls, RenderTexture} from "@react-three/drei";
+import Sound from "./components/Sounds.jsx";
 import Background from "./components/Background.jsx";
 import Lights from "./components/Lights.jsx";
 import Case from "./components/handheld/Case.jsx";
@@ -15,6 +16,7 @@ export default function Experience() {
     return <>
         <Performance/>
         <OrbitControls makeDefault={true}/>
+        <Sound/>
         <Background/>
         <Lights/>
         <Case/>

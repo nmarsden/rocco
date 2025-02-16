@@ -1,5 +1,5 @@
 import {OrbitControls, PerspectiveCamera} from "@react-three/drei";
-import {button, folder, useControls} from "leva";
+import {folder, useControls} from "leva";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 import useRockState from "../../stores/useRockState.js";
