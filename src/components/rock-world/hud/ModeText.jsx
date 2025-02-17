@@ -4,6 +4,7 @@ import useRockState from "../../../stores/useRockState.js";
 
 export default function ModeText() {
     const mode = useRockState((state) => state.mode)
+    const setting = useRockState((state) => state.setting)
 
     const {
         visible, scale, position,
@@ -64,7 +65,7 @@ export default function ModeText() {
                 anchorX="left"
                 anchorY="top"
             >
-                {`${mode} MODE`}
+                {`${mode} MODE ${setting === 'NONE' ? '' : `[${setting}]`}`}
             </Text>
         </group>
     );

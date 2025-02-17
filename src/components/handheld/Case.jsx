@@ -22,6 +22,7 @@ export default function Case() {
     const selectMenuItem = useRockState((state) => state.selectMenuItem)
     const previousMenuItem = useRockState((state) => state.previousMenuItem)
     const nextMenuItem = useRockState((state) => state.nextMenuItem)
+    const unselectMenuItem = useRockState((state) => state.unselectMenuItem)
 
     const { caseColor, roughness, metalness } = useControls(
         'World',
@@ -59,7 +60,7 @@ export default function Case() {
                 <RoccoText/>
             </mesh>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Center_Button.geometry} material={buttonMaterial} onClick={selectMenuItem}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Down_Button.geometry} material={buttonMaterial}/>
+            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Down_Button.geometry} material={buttonMaterial} onClick={unselectMenuItem}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Left_Button.geometry} material={buttonMaterial} onClick={previousMenuItem}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Right_Button.geometry} material={buttonMaterial} onClick={nextMenuItem}/>
             <mesh castShadow={true} receiveShadow={true} geometry={nodes.Up_Button.geometry} material={buttonMaterial}/>

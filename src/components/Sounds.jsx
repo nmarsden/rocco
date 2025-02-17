@@ -67,12 +67,17 @@ export default function Sound() {
                 if (shoot === 'SCISSORS') playSoundsBackToBack(SOUND_SHOOT, SOUND_LOSE)
             }
         )
+        const unsubscribeSetting = useRockState.subscribe(
+            (state) => state.setting,
+            () => SOUND_MENU_ITEM.play()
+        )
 
         return () => {
             unsubscribeMode()
             unsubscribeMenuItem()
             unsubscribeTrick()
             unsubscribeShoot()
+            unsubscribeSetting()
         }
     }, [])
 

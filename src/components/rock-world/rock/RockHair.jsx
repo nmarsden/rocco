@@ -1,9 +1,11 @@
 import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
 import React from "react";
+import useRockState from "../../../stores/useRockState.js";
 
 export default function RockHair() {
     const model = useGLTF('models/hair_10x5x10.glb', false)
+    const hair = useRockState((state) => state.hair)
 
     const { color, positionY, positionZ, rotationY, scale } = useControls(
         'Rock World',
@@ -31,10 +33,11 @@ export default function RockHair() {
             rotation-y={rotationY}
             position-y={positionY}
             position-z={positionZ}
-            scale={scale}
+            scale={(hair === 'LARGE' ? scale : scale * 0.5)}
             geometry={model.scene.children[0].geometry}
             castShadow={true}
             receiveShadow={true}
+            visible={hair !== 'NONE'}
         >
             <meshStandardMaterial color={color}/>
         </mesh>

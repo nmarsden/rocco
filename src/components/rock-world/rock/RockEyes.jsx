@@ -1,9 +1,11 @@
 import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
 import React from "react";
+import useRockState from "../../../stores/useRockState.js";
 
 export default function RockEyes() {
     const { nodes, materials } = useGLTF('models/eye_10x10x4.glb', false)
+    const eyes = useRockState((state) => state.eyes)
 
     const { positionY, positionZ, offsetX, rotationZ, scale } = useControls(
         'Rock World',
@@ -29,11 +31,12 @@ export default function RockEyes() {
     return (
         <>
             <group
-                position={[-offsetX, positionY, positionZ]}
+                position={[(eyes === 'ONE' ? 0 : -offsetX), positionY, positionZ]}
                 scale={scale}
                 rotation-z={rotationZ}
                 castShadow={true}
                 receiveShadow={true}
+                visible={eyes !== 'NONE'}
             >
                 <mesh geometry={nodes.name.geometry} material={materials['Eye Base']}/>
                 <mesh geometry={nodes.name_1.geometry} material={materials['Eye Pupil']}/>
@@ -44,6 +47,7 @@ export default function RockEyes() {
                 rotation-z={rotationZ}
                 castShadow={true}
                 receiveShadow={true}
+                visible={eyes === 'TWO'}
             >
                 <mesh geometry={nodes.name.geometry} material={materials['Eye Base']}/>
                 <mesh geometry={nodes.name_1.geometry} material={materials['Eye Pupil']}/>
