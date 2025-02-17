@@ -35,6 +35,8 @@ Customize
 - size:
 - shape: 
 
+Save settings to local storage
+
 Game Mode
 - play Rock, Paper, Scissors
 - Rock always chooses Rock

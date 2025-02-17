@@ -6,7 +6,7 @@ export default function RockBackground() {
         {
             'Background': folder(
                 {
-                    color: '#ebebeb'
+                    color: '#e5e2e2'
                 },
                 {
                     collapsed: true

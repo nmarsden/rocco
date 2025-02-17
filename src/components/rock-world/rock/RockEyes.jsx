@@ -12,11 +12,11 @@ export default function RockEyes() {
         {
             'Eyes': folder(
                 {
-                    positionY: { value: 0.7, min: 0, max: 10, step: 0.1 },
-                    positionZ: { value: 1.9, min: 0, max: 10, step: 0.1 },
-                    offsetX: { value: 0.5, min: 0, max: 10, step: 0.1 },
+                    positionY: { value: 0.7, min: 0, max: 10, step: 0.01 },
+                    positionZ: { value: 1.6, min: 0, max: 10, step: 0.01 },
+                    offsetX: { value: 0.5, min: 0, max: 10, step: 0.01 },
                     rotationZ: {value: 0, min: -Math.PI, max: Math.PI},
-                    scale: { value: 0.6, min: 0.1, max: 10, step: 0.1 },
+                    scale: { value: 0.6, min: 0.1, max: 10, step: 0.01 },
                 },
                 {
                     collapsed: true
@@ -34,12 +34,10 @@ export default function RockEyes() {
                 position={[(eyes === 'ONE' ? 0 : -offsetX), positionY, positionZ]}
                 scale={scale}
                 rotation-z={rotationZ}
-                castShadow={true}
-                receiveShadow={true}
                 visible={eyes !== 'NONE'}
             >
-                <mesh geometry={nodes.name.geometry} material={materials['Eye Base']}/>
-                <mesh geometry={nodes.name_1.geometry} material={materials['Eye Pupil']}/>
+                <mesh geometry={nodes.name.geometry} material={materials['Eye Base']} castShadow={true} receiveShadow={true} />
+                <mesh geometry={nodes.name_1.geometry} material={materials['Eye Pupil']} castShadow={true} receiveShadow={true} />
             </group>
             <group
                 position={[offsetX, positionY, positionZ]}
@@ -49,8 +47,8 @@ export default function RockEyes() {
                 receiveShadow={true}
                 visible={eyes === 'TWO'}
             >
-                <mesh geometry={nodes.name.geometry} material={materials['Eye Base']}/>
-                <mesh geometry={nodes.name_1.geometry} material={materials['Eye Pupil']}/>
+                <mesh geometry={nodes.name.geometry} material={materials['Eye Base']} castShadow={true} receiveShadow={true} />
+                <mesh geometry={nodes.name_1.geometry} material={materials['Eye Pupil']} castShadow={true} receiveShadow={true} />
             </group>
         </>
     );

@@ -2,6 +2,7 @@ import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
 import RockHair from "./RockHair.jsx";
 import RockEyes from "./RockEyes.jsx";
+import RockMouth from "./RockMouth.jsx";
 
 export default function Rock() {
     const model = useGLTF('models/rock_10x10x10.glb', false);
@@ -36,6 +37,7 @@ export default function Rock() {
             <meshStandardMaterial color={rockColor}/>
             <RockHair />
             <RockEyes />
+            <RockMouth />
         </mesh>
     );
 }

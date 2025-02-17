@@ -36,8 +36,8 @@ const EYES_MENU_ITEMS = [
 
 const MOUTH_MENU_ITEMS = [
     'NONE',
-    'SMILE',
-    'FROWN',
+    'SMALL',
+    'LARGE',
 ]
 
 const MODE_MENUS = [

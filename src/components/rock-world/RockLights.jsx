@@ -12,7 +12,7 @@ export default function RockLights() {
                     }),
                     'Directional': folder({
                         directionalColor: {value: '#ffffff', label: 'color'},
-                        directionalPosition: {value: [2, 6, 2], label: 'position'},
+                        directionalPosition: {value: [2, 6, 3.5], label: 'position'},
                         directionalIntensity: {value: 4.5, label: 'intensity', min: 0, max: 10}
                     })
                 },
