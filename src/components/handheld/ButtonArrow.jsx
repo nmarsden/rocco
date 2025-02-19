@@ -1,18 +1,17 @@
 import {Decal, useTexture} from "@react-three/drei";
 import {folder, useControls} from "leva";
 
-export default function RoccoText() {
-    const texture = useTexture('textures/rocco_text.png');
+export default function RoccoText({ position, rotationZ=0 }) {
+    const texture = useTexture('textures/arrow.png');
 
-    const { visible, scale, position, polygonOffsetFactor, polygonOffsetUnits } = useControls(
+    const { visible, scale, polygonOffsetFactor, polygonOffsetUnits } = useControls(
         'World',
         {
             'Case': folder({
-                'Rocco Text': folder(
+                'ButtonArrow': folder(
                     {
                         visible: true,
-                        scale: {value: 2.8, min: 0.5, max: 5, step: 0.01},
-                        position: [0, 5.7, 1],
+                        scale: {value: 1.4, min: 0.5, max: 5, step: 0.01},
                         polygonOffsetFactor: {value: -0.1, min: -10, max: 10, step: 0.1},
                         polygonOffsetUnits: {value: -10, min: -10, max: 10, step: 0.1},
                     },
@@ -33,7 +32,7 @@ export default function RoccoText() {
             visible={visible}
             position={position}
             scale={scale}
-            rotation={[0, 0, 0]}
+            rotation={[0, 0, rotationZ]}
         >
             <meshStandardMaterial
                 map={texture}
@@ -47,4 +46,4 @@ export default function RoccoText() {
     );
 }
 
-useTexture.preload('textures/rocco_text.png')
+useTexture.preload('textures/arrow.png')

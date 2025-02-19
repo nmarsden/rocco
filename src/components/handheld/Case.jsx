@@ -1,17 +1,14 @@
 import {useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
 import RoccoText from "./RoccoText.jsx";
+import ButtonText from "./ButtonText.jsx";
+import ButtonArrow from "./ButtonArrow.jsx";
 import React from "react";
 import * as THREE from "three";
 import useRockState from "../../stores/useRockState.js";
 
 const buttonMaterial = new THREE.MeshStandardMaterial({
     color: '#e2d9d9',
-    roughness: 0.0,
-    metalness: 0.45
-})
-const modeButtonMaterial = new THREE.MeshStandardMaterial({
-    color: '#52b4de',
     roughness: 0.0,
     metalness: 0.45
 })
@@ -24,14 +21,13 @@ export default function Case() {
     const nextMenuItem = useRockState((state) => state.nextMenuItem)
     const unselectMenuItem = useRockState((state) => state.unselectMenuItem)
 
-    const { caseColor, roughness, metalness } = useControls(
+    const { caseColor, buttonColor, roughness, metalness } = useControls(
         'World',
         {
             'Case': folder(
                 {
                     caseColor: { value: '#be3b37', label: 'case color' },
-                    buttonColor: { value: '#e2d9d9', label: 'button color', onChange: value => buttonMaterial.color.set(value) },
-                    modeButtonColor: { value: '#52b4de', label: 'mode button color', onChange: value => modeButtonMaterial.color.set(value) },
+                    buttonColor: { value: '#e2d9d9', label: 'button color' },
                     roughness: { value: 0.0, label: 'roughness', min: 0, max: 10, step: 0.1 },
                     metalness: { value: 0.45, label: 'metalness', min: 0, max: 10, step: 0.1 },
                 },
@@ -48,7 +44,7 @@ export default function Case() {
     return (
         <group dispose={null}>
             <mesh
-                geometry={nodes.Case003.geometry}
+                geometry={nodes.Case004.geometry}
                 castShadow={true}
                 receiveShadow={true}
             >
@@ -59,12 +55,55 @@ export default function Case() {
                 />
                 <RoccoText/>
             </mesh>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Center_Button.geometry} material={buttonMaterial} onClick={selectMenuItem}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Down_Button.geometry} material={buttonMaterial} onClick={unselectMenuItem}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Left_Button.geometry} material={buttonMaterial} onClick={previousMenuItem}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Right_Button.geometry} material={buttonMaterial} onClick={nextMenuItem}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Up_Button.geometry} material={buttonMaterial}/>
-            <mesh castShadow={true} receiveShadow={true} geometry={nodes.Mode_Button.geometry} material={modeButtonMaterial} onClick={toggleMode}/>
+            <mesh castShadow={true}
+                  receiveShadow={true}
+                  geometry={nodes.Up_Button001.geometry}
+                  material={buttonMaterial}
+                  onClick={toggleMode}
+            >
+                <ButtonText position={[0, -2.1, 1.17]} text={'MODE'}/>
+            </mesh>
+            <mesh castShadow={true}
+                  receiveShadow={true}
+                  geometry={nodes.Center_Button001.geometry}
+                  material={buttonMaterial}
+                  onClick={selectMenuItem}
+            >
+                <ButtonText position={[0, -4.35, 1.17]} text={'SELECT'}/>
+            </mesh>
+            <mesh castShadow={true}
+                  receiveShadow={true}
+                  geometry={nodes.Down_Button001.geometry}
+                  material={buttonMaterial}
+                  onClick={unselectMenuItem}
+            >
+                <ButtonText position={[0, -6.6, 1.17]} text={'BACK'}/>
+            </mesh>
+            {/*TODO fix double click due to decal ???*/}
+            <mesh castShadow={true}
+                  receiveShadow={true}
+                  geometry={nodes.Left_Button001.geometry}
+                  onClick={previousMenuItem}
+            >
+                <meshStandardMaterial
+                    roughness={roughness}
+                    metalness={metalness}
+                    color={buttonColor}
+                />
+                <ButtonArrow position={[-2.2, -4.35, 1.0]} rotationZ={Math.PI}/>
+            </mesh>
+            <mesh castShadow={true}
+                  receiveShadow={true}
+                  geometry={nodes.Right_Button001.geometry}
+                  onClick={nextMenuItem}
+            >
+                <meshStandardMaterial
+                    roughness={roughness}
+                    metalness={metalness}
+                    color={buttonColor}
+                />
+                <ButtonArrow position={[2.2, -4.35, 1.0]}/>
+            </mesh>
         </group>
     );
 }
