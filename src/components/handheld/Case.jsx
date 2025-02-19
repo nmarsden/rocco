@@ -3,7 +3,7 @@ import {folder, useControls} from "leva";
 import RoccoText from "./RoccoText.jsx";
 import ButtonText from "./ButtonText.jsx";
 import ButtonArrow from "./ButtonArrow.jsx";
-import React from "react";
+import {useCallback} from "react";
 import * as THREE from "three";
 import useRockState from "../../stores/useRockState.js";
 
@@ -20,6 +20,13 @@ export default function Case() {
     const previousMenuItem = useRockState((state) => state.previousMenuItem)
     const nextMenuItem = useRockState((state) => state.nextMenuItem)
     const unselectMenuItem = useRockState((state) => state.unselectMenuItem)
+
+    const buttonClicked = useCallback((e, fn) => {
+        return () => {
+            if (e.object.name === 'ButtonText' || e.object.name === 'ButtonArrow') return;
+            fn()
+        }
+    })
 
     const { caseColor, buttonColor, roughness, metalness } = useControls(
         'World',
@@ -59,15 +66,16 @@ export default function Case() {
                   receiveShadow={true}
                   geometry={nodes.Up_Button001.geometry}
                   material={buttonMaterial}
-                  onClick={toggleMode}
+                  onClick={(e) => buttonClicked(e, toggleMode)()}
             >
-                <ButtonText position={[0, -2.1, 1.17]} text={'MODE'}/>
+                <ButtonText position={[0, -2.2, 1.17]} text={'MODE'}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
+                  position-y={-0.1}
                   geometry={nodes.Center_Button001.geometry}
                   material={buttonMaterial}
-                  onClick={selectMenuItem}
+                  onClick={(e) => buttonClicked(e, selectMenuItem)()}
             >
                 <ButtonText position={[0, -4.35, 1.17]} text={'SELECT'}/>
             </mesh>
@@ -75,34 +83,34 @@ export default function Case() {
                   receiveShadow={true}
                   geometry={nodes.Down_Button001.geometry}
                   material={buttonMaterial}
-                  onClick={unselectMenuItem}
+                  onClick={(e) => buttonClicked(e, unselectMenuItem)()}
             >
                 <ButtonText position={[0, -6.6, 1.17]} text={'BACK'}/>
             </mesh>
-            {/*TODO fix double click due to decal ???*/}
             <mesh castShadow={true}
                   receiveShadow={true}
                   geometry={nodes.Left_Button001.geometry}
-                  onClick={previousMenuItem}
+                  material={buttonMaterial}
+                  onClick={(e) => buttonClicked(e, previousMenuItem)()}
             >
                 <meshStandardMaterial
                     roughness={roughness}
                     metalness={metalness}
                     color={buttonColor}
                 />
-                <ButtonArrow position={[-2.2, -4.35, 1.0]} rotationZ={Math.PI}/>
+                <ButtonArrow position={[-2.2, -4.45, 1.0]} rotationZ={Math.PI}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
                   geometry={nodes.Right_Button001.geometry}
-                  onClick={nextMenuItem}
+                  onClick={(e) => buttonClicked(e, nextMenuItem)()}
             >
                 <meshStandardMaterial
                     roughness={roughness}
                     metalness={metalness}
                     color={buttonColor}
                 />
-                <ButtonArrow position={[2.2, -4.35, 1.0]}/>
+                <ButtonArrow position={[2.2, -4.45, 1.0]}/>
             </mesh>
         </group>
     );

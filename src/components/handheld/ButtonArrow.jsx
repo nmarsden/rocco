@@ -28,6 +28,7 @@ export default function RoccoText({ position, rotationZ=0 }) {
 
     return (
         <Decal
+            name={"ButtonArrow"}
             debug={false}
             visible={visible}
             position={position}

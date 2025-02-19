@@ -28,6 +28,7 @@ export default function ButtonText({ position, text }) {
 
     return (
         <Text
+            name={"ButtonText"}
             position={position}
             scale={scale}
             color={textColor}
