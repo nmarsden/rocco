@@ -59,7 +59,7 @@ export default create(subscribeWithSelector((set) =>
         setting: 'NONE',
         hair: 'LARGE',
         eyes: 'TWO',
-        mouth: 'NONE',
+        mouth: 'SMALL',
 
         toggleMode: () =>
         {

@@ -12,7 +12,7 @@ export default function Lights() {
                     }),
                     'Directional': folder({
                         directionalColor: {value: '#ffffff', label: 'color'},
-                        directionalPosition: {value: [3, 5, 1], label: 'position'},
+                        directionalPosition: {value: [1.5, 5, 1], label: 'position'},
                         directionalIntensity: {value: 4.0, label: 'intensity', min: 0, max: 10}
                     })
                 },

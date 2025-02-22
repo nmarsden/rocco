@@ -4,7 +4,7 @@ import React from "react";
 import useRockState from "../../../stores/useRockState.js";
 
 export default function RockMouth() {
-    const model = useGLTF('models/mouth.glb', false)
+    const model = useGLTF('models/mouth-smile.glb', false)
     const mouth = useRockState((state) => state.mouth)
 
     const { color, positionY, positionZ, rotationY, scale } = useControls(
@@ -12,9 +12,9 @@ export default function RockMouth() {
         {
             'Mouth': folder(
                 {
-                    color: {value: '#b44141', label: 'color'},
+                    color: {value: '#171515', label: 'color'},
                     positionY: { value: -0.3, min: -2, max: 10, step: 0.01 },
-                    positionZ: { value: 1.74, min: 0, max: 10, step: 0.01 },
+                    positionZ: { value: 1.67, min: 0, max: 10, step: 0.01 },
                     scale: { value: 0.3, min: 0.1, max: 10, step: 0.1 },
                 },
                 {
@@ -42,4 +42,4 @@ export default function RockMouth() {
     );
 }
 
-useGLTF.preload('models/mouth.glb', false)
+useGLTF.preload('models/mouth-smile.glb', false)

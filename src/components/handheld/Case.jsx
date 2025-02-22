@@ -72,7 +72,6 @@ export default function Case() {
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
-                  position-y={-0.1}
                   geometry={nodes.Center_Button001.geometry}
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, selectMenuItem)()}
@@ -98,7 +97,7 @@ export default function Case() {
                     metalness={metalness}
                     color={buttonColor}
                 />
-                <ButtonArrow position={[-2.2, -4.45, 1.0]} rotationZ={Math.PI}/>
+                <ButtonArrow position={[-2.2, -4.35, 1.0]} rotationZ={Math.PI}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
@@ -110,7 +109,7 @@ export default function Case() {
                     metalness={metalness}
                     color={buttonColor}
                 />
-                <ButtonArrow position={[2.2, -4.45, 1.0]}/>
+                <ButtonArrow position={[2.2, -4.35, 1.0]}/>
             </mesh>
         </group>
     );
