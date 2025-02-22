@@ -1,12 +1,29 @@
 import {folder, useControls} from "leva";
+import {Environment} from "@react-three/drei";
+import {suspend} from "suspend-react";
+// @ts-ignore
+const files = import('@pmndrs/assets/hdri/venice.exr').then((module) => module.default)
 
 export default function Background() {
-    const { color } = useControls(
+    const {
+        color,
+        background,
+        intensity,
+        blur,
+        rotationX,
+        rotationY,
+        rotationZ
+    } = useControls(
         'World',
         {
             'Background': folder(
                 {
-                    color: '#65cdf2'
+                    background: true,
+                    intensity: { value: 0.05, min: 0, max: 1, step: 0.01 },
+                    blur: { value: 1, min: 0, max: 1, step: 0.01 },
+                    rotationX: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
+                    rotationY: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
+                    rotationZ: { value: 0, min: -Math.PI, max: Math.PI, step: 0.01 },
                 },
                 {
                     collapsed: true
@@ -19,6 +36,12 @@ export default function Background() {
     );
 
     return (
-        <color attach='background' args={[color]}/>
+        <Environment
+            files={suspend(files)}
+            background={background}
+            environmentIntensity={intensity}
+            environmentRotation={[rotationX, rotationY, rotationZ]}
+            blur={blur}
+        />
     )
 }
