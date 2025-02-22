@@ -1,17 +1,23 @@
-import {useGLTF} from "@react-three/drei";
+import {useCursor, useGLTF} from "@react-three/drei";
 import {folder, useControls} from "leva";
 import RoccoText from "./RoccoText.jsx";
 import ButtonText from "./ButtonText.jsx";
 import ButtonArrow from "./ButtonArrow.jsx";
-import {useCallback} from "react";
+import {useCallback, useRef, useState} from "react";
+import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 import useRockState from "../../stores/useRockState.js";
+import {MathUtils} from "three";
 
 const buttonMaterial = new THREE.MeshStandardMaterial({
     color: '#e2d9d9',
     roughness: 0.0,
     metalness: 0.45
 })
+
+let animating = 'NONE'
+let animationStartTime;
+const buttonAnimationDurationMSecs = 500
 
 export default function Case() {
     const { nodes} = useGLTF('models/case.glb', false)
@@ -20,10 +26,39 @@ export default function Case() {
     const previousMenuItem = useRockState((state) => state.previousMenuItem)
     const nextMenuItem = useRockState((state) => state.nextMenuItem)
     const unselectMenuItem = useRockState((state) => state.unselectMenuItem)
+    const [hovered, setHovered] = useState()
+    const modeButton = useRef()
+    const selectButton = useRef()
+    const backButton = useRef()
+    const previousButton = useRef()
+    const nextButton = useRef()
 
-    const buttonClicked = useCallback((e, fn) => {
+    useCursor(hovered)
+
+    useFrame(() => {
+        if (animating === 'NONE') return
+
+        const elapsedTime = new Date() - animationStartTime
+        const animationProgress = elapsedTime / buttonAnimationDurationMSecs
+        if (animationProgress > 1) {
+            animating = 'NONE'
+            return;
+        }
+        const positionZ = -0.15 * Math.sin(animationProgress * Math.PI)
+
+        if (animating === 'MODE') modeButton.current.position.z = positionZ
+        if (animating === 'SELECT') selectButton.current.position.z = positionZ
+        if (animating === 'BACK') backButton.current.position.z = positionZ
+        if (animating === 'PREVIOUS') previousButton.current.position.z = positionZ
+        if (animating === 'NEXT') nextButton.current.position.z = positionZ
+
+    })
+
+    const buttonClicked = useCallback((e, fn, anim) => {
         return () => {
             if (e.object.name === 'ButtonText' || e.object.name === 'ButtonArrow') return;
+            animationStartTime = new Date();
+            animating = anim
             fn()
         }
     })
@@ -53,7 +88,7 @@ export default function Case() {
             dispose={null}
         >
             <mesh
-                geometry={nodes.Case004.geometry}
+                geometry={nodes.Cube006.geometry}
                 castShadow={true}
                 receiveShadow={true}
             >
@@ -64,35 +99,47 @@ export default function Case() {
                 />
                 <RoccoText/>
             </mesh>
-            <mesh castShadow={true}
+            <mesh ref={modeButton}
+                  castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Up_Button001.geometry}
+                  geometry={nodes.Up_Button002.geometry}
                   material={buttonMaterial}
-                  onClick={(e) => buttonClicked(e, toggleMode)()}
+                  onClick={(e) => buttonClicked(e, toggleMode, 'MODE')()}
+                  onPointerOver={() => setHovered(true)}
+                  onPointerOut={() => setHovered(false)}
             >
                 <ButtonText position={[0, -1.5, 1.17]} text={'MODE'}/>
             </mesh>
-            <mesh castShadow={true}
+            <mesh ref={selectButton}
+                  castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Center_Button001.geometry}
+                  geometry={nodes.Center_Button002.geometry}
                   material={buttonMaterial}
-                  onClick={(e) => buttonClicked(e, selectMenuItem)()}
+                  onClick={(e) => buttonClicked(e, selectMenuItem, 'SELECT')()}
+                  onPointerOver={() => setHovered(true)}
+                  onPointerOut={() => setHovered(false)}
             >
                 <ButtonText position={[0, -3.65, 1.17]} text={'SELECT'}/>
             </mesh>
-            <mesh castShadow={true}
+            <mesh ref={backButton}
+                  castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Down_Button001.geometry}
+                  geometry={nodes.Down_Button002.geometry}
                   material={buttonMaterial}
-                  onClick={(e) => buttonClicked(e, unselectMenuItem)()}
+                  onClick={(e) => buttonClicked(e, unselectMenuItem, 'BACK')()}
+                  onPointerOver={() => setHovered(true)}
+                  onPointerOut={() => setHovered(false)}
             >
                 <ButtonText position={[0, -5.9, 1.17]} text={'BACK'}/>
             </mesh>
-            <mesh castShadow={true}
+            <mesh ref={previousButton}
+                  castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Left_Button001.geometry}
+                  geometry={nodes.Left_Button002.geometry}
                   material={buttonMaterial}
-                  onClick={(e) => buttonClicked(e, previousMenuItem)()}
+                  onClick={(e) => buttonClicked(e, previousMenuItem, 'PREVIOUS')()}
+                  onPointerOver={() => setHovered(true)}
+                  onPointerOut={() => setHovered(false)}
             >
                 <meshStandardMaterial
                     roughness={roughness}
@@ -101,10 +148,13 @@ export default function Case() {
                 />
                 <ButtonArrow position={[-2.2, -3.65, 1.0]} rotationZ={Math.PI}/>
             </mesh>
-            <mesh castShadow={true}
+            <mesh ref={nextButton}
+                  castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Right_Button001.geometry}
-                  onClick={(e) => buttonClicked(e, nextMenuItem)()}
+                  geometry={nodes.Right_Button002.geometry}
+                  onClick={(e) => buttonClicked(e, nextMenuItem, 'NEXT')()}
+                  onPointerOver={() => setHovered(true)}
+                  onPointerOut={() => setHovered(false)}
             >
                 <meshStandardMaterial
                     roughness={roughness}

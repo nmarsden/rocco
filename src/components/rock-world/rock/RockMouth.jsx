@@ -14,7 +14,7 @@ export default function RockMouth() {
                 {
                     color: {value: '#171515', label: 'color'},
                     positionY: { value: -0.3, min: -2, max: 10, step: 0.01 },
-                    positionZ: { value: 1.67, min: 0, max: 10, step: 0.01 },
+                    positionZ: { value: 1.60, min: 0, max: 10, step: 0.01 },
                     scale: { value: 0.3, min: 0.1, max: 10, step: 0.1 },
                 },
                 {
@@ -30,7 +30,7 @@ export default function RockMouth() {
     return (
         <mesh
             position-y={positionY}
-            position-z={positionZ}
+            position-z={(mouth === 'LARGE' ? positionZ - 0.1 : positionZ)}
             scale={(mouth === 'LARGE' ? scale : scale * 0.5)}
             geometry={model.scene.children[0].geometry}
             castShadow={true}
