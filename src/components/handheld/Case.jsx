@@ -49,7 +49,9 @@ export default function Case() {
     );
 
     return (
-        <group dispose={null}>
+        <group
+            dispose={null}
+        >
             <mesh
                 geometry={nodes.Case004.geometry}
                 castShadow={true}
@@ -68,7 +70,7 @@ export default function Case() {
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, toggleMode)()}
             >
-                <ButtonText position={[0, -2.2, 1.17]} text={'MODE'}/>
+                <ButtonText position={[0, -1.5, 1.17]} text={'MODE'}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
@@ -76,7 +78,7 @@ export default function Case() {
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, selectMenuItem)()}
             >
-                <ButtonText position={[0, -4.35, 1.17]} text={'SELECT'}/>
+                <ButtonText position={[0, -3.65, 1.17]} text={'SELECT'}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
@@ -84,7 +86,7 @@ export default function Case() {
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, unselectMenuItem)()}
             >
-                <ButtonText position={[0, -6.6, 1.17]} text={'BACK'}/>
+                <ButtonText position={[0, -5.9, 1.17]} text={'BACK'}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
@@ -97,7 +99,7 @@ export default function Case() {
                     metalness={metalness}
                     color={buttonColor}
                 />
-                <ButtonArrow position={[-2.2, -4.35, 1.0]} rotationZ={Math.PI}/>
+                <ButtonArrow position={[-2.2, -3.65, 1.0]} rotationZ={Math.PI}/>
             </mesh>
             <mesh castShadow={true}
                   receiveShadow={true}
@@ -109,7 +111,7 @@ export default function Case() {
                     metalness={metalness}
                     color={buttonColor}
                 />
-                <ButtonArrow position={[2.2, -4.35, 1.0]}/>
+                <ButtonArrow position={[2.2, -3.65, 1.0]}/>
             </mesh>
         </group>
     );

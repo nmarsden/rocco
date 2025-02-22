@@ -12,7 +12,7 @@ export default function RoccoText() {
                     {
                         visible: true,
                         scale: {value: 2.8, min: 0.5, max: 5, step: 0.01},
-                        position: [0, 5.7, 1],
+                        position: [0, 6.4, 1],
                         polygonOffsetFactor: {value: -0.1, min: -10, max: 10, step: 0.1},
                         polygonOffsetUnits: {value: -10, min: -10, max: 10, step: 0.1},
                     },

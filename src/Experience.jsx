@@ -20,7 +20,7 @@ export default function Experience() {
         <Background/>
         <Lights/>
         <Case/>
-        <mesh position-y={2.3} position-z={0.82} scale={5.8}>
+        <mesh position-y={3} position-z={0.82} scale={5.8}>
             <planeGeometry/>
             <meshBasicMaterial>
                 <RenderTexture attach="map">
