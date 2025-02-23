@@ -105,3 +105,4 @@ Resources
 - Convert font to typeface.js - https://gero3.github.io/facetype.js/
 - Free Casual Game Sounds - https://dustyroom.com/free-casual-game-sounds
 - Convert WAV to WEBM - https://www.freeconvert.com/wav-to-webm
+- Cool Text Graphics Generator - https://cooltext.com/
