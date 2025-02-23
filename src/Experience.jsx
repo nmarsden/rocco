@@ -19,21 +19,22 @@ export default function Experience() {
         <Sound/>
         <Background/>
         <Lights/>
-        <Case/>
-        <mesh position-y={3} position-z={0.82} scale={5.8}>
-            <planeGeometry/>
-            <meshBasicMaterial>
-                <RenderTexture attach="map">
-                    <RockCameraControls>
-                        <Hud/>
-                    </RockCameraControls>
-                    <RockLights/>
-                    <RockBackground/>
-                    <RockFloor/>
-                    <Rock/>
-                    <RockDotScreenEffect/>
-                </RenderTexture>
-            </meshBasicMaterial>
-        </mesh>
+        <Case>
+            <mesh position-y={3} position-z={0.82} scale={5.8}>
+                <planeGeometry/>
+                <meshBasicMaterial>
+                    <RenderTexture attach="map">
+                        <RockCameraControls>
+                            <Hud/>
+                        </RockCameraControls>
+                        <RockLights/>
+                        <RockBackground/>
+                        <RockFloor/>
+                        <Rock/>
+                        <RockDotScreenEffect/>
+                    </RenderTexture>
+                </meshBasicMaterial>
+            </mesh>
+        </Case>
     </>
 }

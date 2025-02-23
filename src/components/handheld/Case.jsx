@@ -3,7 +3,7 @@ import {folder, useControls} from "leva";
 import RoccoText from "./RoccoText.jsx";
 import ButtonText from "./ButtonText.jsx";
 import ButtonArrow from "./ButtonArrow.jsx";
-import {useCallback, useRef, useState} from "react";
+import {useCallback, useRef, useState, useEffect} from "react";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
 import useRockState from "../../stores/useRockState.js";
@@ -16,10 +16,11 @@ const buttonMaterial = new THREE.MeshStandardMaterial({
 })
 
 let animating = 'NONE'
-let animationStartTime;
+let animationStartTime
 const buttonAnimationDurationMSecs = 500
+const groupAnimationDurationMSecs = 1500
 
-export default function Case() {
+export default function Case({ children }) {
     const { nodes} = useGLTF('models/case.glb', false)
     const toggleMode = useRockState((state) => state.toggleMode)
     const selectMenuItem = useRockState((state) => state.selectMenuItem)
@@ -27,6 +28,7 @@ export default function Case() {
     const nextMenuItem = useRockState((state) => state.nextMenuItem)
     const unselectMenuItem = useRockState((state) => state.unselectMenuItem)
     const [hovered, setHovered] = useState()
+    const group = useRef()
     const modeButton = useRef()
     const selectButton = useRef()
     const backButton = useRef()
@@ -39,13 +41,22 @@ export default function Case() {
         if (animating === 'NONE') return
 
         const elapsedTime = new Date() - animationStartTime
-        const animationProgress = elapsedTime / buttonAnimationDurationMSecs
+        const animationDuration = (animating === 'GROUP') ? groupAnimationDurationMSecs : buttonAnimationDurationMSecs
+        const animationProgress = elapsedTime / animationDuration
         if (animationProgress > 1) {
             animating = 'NONE'
             return;
         }
         const positionZ = -0.15 * Math.sin(animationProgress * Math.PI)
 
+        if (animating === 'GROUP') {
+            const factor = Math.sin(animationProgress * Math.PI * 0.5)
+            group.current.rotation.y = Math.PI * 2 * factor
+            group.current.rotation.z = Math.PI * 2 * factor
+            group.current.scale.x = factor
+            group.current.scale.y = factor
+            group.current.scale.z = factor
+        }
         if (animating === 'MODE') modeButton.current.position.z = positionZ
         if (animating === 'SELECT') selectButton.current.position.z = positionZ
         if (animating === 'BACK') backButton.current.position.z = positionZ
@@ -53,6 +64,13 @@ export default function Case() {
         if (animating === 'NEXT') nextButton.current.position.z = positionZ
 
     })
+
+    useEffect(() => {
+        setTimeout(() => {
+            animating = 'GROUP'
+            animationStartTime = new Date();
+        }, 200)
+    }, [])
 
     const buttonClicked = useCallback((e, fn, anim) => {
         return () => {
@@ -85,6 +103,8 @@ export default function Case() {
 
     return (
         <group
+            ref={group}
+            scale={0}
             dispose={null}
         >
             <mesh
@@ -163,6 +183,7 @@ export default function Case() {
                 />
                 <ButtonArrow position={[2.2, -3.65, 1.0]}/>
             </mesh>
+            {children}
         </group>
     );
 }
