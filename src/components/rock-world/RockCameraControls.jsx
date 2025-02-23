@@ -53,42 +53,50 @@ export default function RockCameraControls({ children }) {
     }
 
     const { orbitControlsEnabled } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            orbitControlsEnabled: {
-                value: false,
-                label: 'orbit controls'
-                // onChange: (value) => {
-                //     console.log('--------- orbitControls ----------------------')
-                //     console.log('orbitControlsEnabled=', value)
-                // },
-                // transient: false
-            }
+            'CameraControls': folder(
+                {
+                    orbitControlsEnabled: {
+                        value: false,
+                        label: 'orbit controls'
+                        // onChange: (value) => {
+                        //     console.log('--------- orbitControls ----------------------')
+                        //     console.log('orbitControlsEnabled=', value)
+                        // },
+                        // transient: false
+                    }
+                }
+            )
         },
         {
             collapsed: true
         }
     );
     const { aspect, fov, position } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Camera': folder(
+            'CameraControls': folder(
                 {
-                    aspect: {
-                        value: 1,
-                        min: 0.1,
-                        max: 10,
-                        step: 0.1
-                    },
-                    fov: {
-                        value: 45,
-                        min: 0,
-                        max: 200,
-                        step: 5
-                    }
-                },
-                {
-                    collapsed: true
+                    'Camera': folder(
+                        {
+                            aspect: {
+                                value: 1,
+                                min: 0.1,
+                                max: 10,
+                                step: 0.1
+                            },
+                            fov: {
+                                value: 45,
+                                min: 0,
+                                max: 200,
+                                step: 5
+                            }
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
                 }
             )
         },
@@ -98,15 +106,25 @@ export default function RockCameraControls({ children }) {
     );
 
     const { cameraShakeDurationMSecs, cameraShakeMaxAmplitude } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Shake': folder(
+            'CameraControls': folder(
                 {
-                    cameraShakeDurationMSecs: {value: 3000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200},
-                    cameraShakeMaxAmplitude: {value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25}
-                },
-                {
-                    collapsed: true
+                    'Shake': folder(
+                        {
+                            cameraShakeDurationMSecs: {
+                                value: 3000,
+                                label: 'duration (msecs)',
+                                min: 1000,
+                                max: 10000,
+                                step: 200
+                            },
+                            cameraShakeMaxAmplitude: {value: 2, label: 'maxAmplitude', min: 0.25, max: 10, step: 0.25}
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
                 }
             )
         },
@@ -116,14 +134,24 @@ export default function RockCameraControls({ children }) {
     );
 
     const { cameraSpinDurationMSecs } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Spin': folder(
+            'CameraControls': folder(
                 {
-                    cameraSpinDurationMSecs: {value: 2000, label: 'duration (msecs)', min: 1000, max: 10000, step: 200}
-                },
-                {
-                    collapsed: true
+                    'Spin': folder(
+                        {
+                            cameraSpinDurationMSecs: {
+                                value: 2000,
+                                label: 'duration (msecs)',
+                                min: 1000,
+                                max: 10000,
+                                step: 200
+                            }
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
                 }
             )
         },
@@ -133,26 +161,29 @@ export default function RockCameraControls({ children }) {
     );
 
     const { cameraRollDurationMSecs, cameraRollPosition } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Roll': folder(
+            'CameraControls': folder(
                 {
-                    cameraRollDurationMSecs: {
-                        value: 2000,
-                        label: 'duration (msecs)',
-                        min: 1000,
-                        max: 10000,
-                        step: 200
-                    },
-                    cameraRollPosition: {
-                        value: { x: 0, y: 0, z: 6 },
-                        label: 'position'
-                    }
-                },
-                {
-                    collapsed: true
-                }
-            )
+                    'Roll': folder(
+                        {
+                            cameraRollDurationMSecs: {
+                                value: 2000,
+                                label: 'duration (msecs)',
+                                min: 1000,
+                                max: 10000,
+                                step: 200
+                            },
+                            cameraRollPosition: {
+                                value: {x: 0, y: 0, z: 6},
+                                label: 'position'
+                            }
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
+                })
         },
         {
             collapsed: true
@@ -160,28 +191,32 @@ export default function RockCameraControls({ children }) {
     );
 
     const { cameraStandDurationMSecs, cameraStandPosition, cameraStandLookAt } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Stand': folder(
+            'CameraControls': folder(
                 {
-                    cameraStandDurationMSecs: {
-                        value: 4000,
-                        label: 'duration (msecs)',
-                        min: 1000,
-                        max: 10000,
-                        step: 200
-                    },
-                    cameraStandPosition: {
-                        value: { x: 0, y: -1.4, z: 4 },
-                        label: 'position'
-                    },
-                    cameraStandLookAt: {
-                        value: { x: 0, y: 3, z: -3.5 },
-                        label: 'lookAt'
-                    }
-                },
-                {
-                    collapsed: true
+                    'Stand': folder(
+                        {
+                            cameraStandDurationMSecs: {
+                                value: 4000,
+                                label: 'duration (msecs)',
+                                min: 1000,
+                                max: 10000,
+                                step: 200
+                            },
+                            cameraStandPosition: {
+                                value: {x: 0, y: -1.4, z: 4},
+                                label: 'position'
+                            },
+                            cameraStandLookAt: {
+                                value: {x: 0, y: 3, z: -3.5},
+                                label: 'lookAt'
+                            }
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
                 }
             )
         },
@@ -191,24 +226,28 @@ export default function RockCameraControls({ children }) {
     );
 
     const { cameraStayDurationMSecs, cameraStayPosition } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Stay': folder(
+            'CameraControls': folder(
                 {
-                    cameraStayDurationMSecs: {
-                        value: 6000,
-                        label: 'duration (msecs)',
-                        min: 1000,
-                        max: 10000,
-                        step: 200
-                    },
-                    cameraStayPosition: {
-                        value: { x: 0, y: 0, z: 25 },
-                        label: 'position'
-                    }
-                },
-                {
-                    collapsed: true
+                    'Stay': folder(
+                        {
+                            cameraStayDurationMSecs: {
+                                value: 6000,
+                                label: 'duration (msecs)',
+                                min: 1000,
+                                max: 10000,
+                                step: 200
+                            },
+                            cameraStayPosition: {
+                                value: {x: 0, y: 0, z: 25},
+                                label: 'position'
+                            }
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
                 }
             )
         },
@@ -218,24 +257,28 @@ export default function RockCameraControls({ children }) {
     );
 
     const { cameraComeDurationMSecs, cameraComePosition } = useControls(
-        'CameraControls',
+        'Rock World',
         {
-            'Come': folder(
+            'CameraControls': folder(
                 {
-                    cameraComeDurationMSecs: {
-                        value: 6000,
-                        label: 'duration (msecs)',
-                        min: 1000,
-                        max: 10000,
-                        step: 200
-                    },
-                    cameraComePosition: {
-                        value: { x: 0, y: 1, z: 5 },
-                        label: 'position'
-                    }
-                },
-                {
-                    collapsed: true
+                    'Come': folder(
+                        {
+                            cameraComeDurationMSecs: {
+                                value: 6000,
+                                label: 'duration (msecs)',
+                                min: 1000,
+                                max: 10000,
+                                step: 200
+                            },
+                            cameraComePosition: {
+                                value: {x: 0, y: 1, z: 5},
+                                label: 'position'
+                            }
+                        },
+                        {
+                            collapsed: true
+                        }
+                    )
                 }
             )
         },
