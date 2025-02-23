@@ -108,7 +108,7 @@ export default function Case({ children }) {
             dispose={null}
         >
             <mesh
-                geometry={nodes.Cube006.geometry}
+                geometry={nodes.Case006.geometry}
                 castShadow={true}
                 receiveShadow={true}
             >
@@ -122,7 +122,7 @@ export default function Case({ children }) {
             <mesh ref={modeButton}
                   castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Up_Button002.geometry}
+                  geometry={nodes.Up_Button003.geometry}
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, toggleMode, 'MODE')()}
                   onPointerOver={() => setHovered(true)}
@@ -133,7 +133,7 @@ export default function Case({ children }) {
             <mesh ref={selectButton}
                   castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Center_Button002.geometry}
+                  geometry={nodes.Center_Button003.geometry}
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, selectMenuItem, 'SELECT')()}
                   onPointerOver={() => setHovered(true)}
@@ -144,7 +144,7 @@ export default function Case({ children }) {
             <mesh ref={backButton}
                   castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Down_Button002.geometry}
+                  geometry={nodes.Down_Button003.geometry}
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, unselectMenuItem, 'BACK')()}
                   onPointerOver={() => setHovered(true)}
@@ -155,7 +155,7 @@ export default function Case({ children }) {
             <mesh ref={previousButton}
                   castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Left_Button002.geometry}
+                  geometry={nodes.Left_Button003.geometry}
                   material={buttonMaterial}
                   onClick={(e) => buttonClicked(e, previousMenuItem, 'PREVIOUS')()}
                   onPointerOver={() => setHovered(true)}
@@ -171,7 +171,7 @@ export default function Case({ children }) {
             <mesh ref={nextButton}
                   castShadow={true}
                   receiveShadow={true}
-                  geometry={nodes.Right_Button002.geometry}
+                  geometry={nodes.Right_Button003.geometry}
                   onClick={(e) => buttonClicked(e, nextMenuItem, 'NEXT')()}
                   onPointerOver={() => setHovered(true)}
                   onPointerOut={() => setHovered(false)}
