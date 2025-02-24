@@ -22,9 +22,6 @@ const groupAnimationDurationMSecs = 1500
 
 export default function Case({ children }) {
     const { nodes} = useGLTF('models/case.glb', false)
-
-    console.log('nodes=', nodes)
-
     const toggleMode = useRockState((state) => state.toggleMode)
     const selectMenuItem = useRockState((state) => state.selectMenuItem)
     const previousMenuItem = useRockState((state) => state.previousMenuItem)

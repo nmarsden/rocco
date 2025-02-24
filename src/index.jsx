@@ -5,6 +5,7 @@ import {Leva} from "leva";
 import {Suspense} from "react";
 import {Loader} from "@react-three/drei";
 import Experience from './Experience.jsx'
+import Ui from "./components/ui/Ui.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -26,6 +27,7 @@ root.render(
                 <Experience />
             </Suspense>
         </Canvas>
+        <Ui />
         <Loader containerStyles={{ background: '#ffffff' }}/>
     </>
 )
