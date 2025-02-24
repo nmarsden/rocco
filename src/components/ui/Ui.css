@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: 'Doto';
-    src: url('fonts/Doto-ExtraBold.ttf');
+    src: url('/fonts/Doto-ExtraBold.ttf');
 }
 
 .infoButton,
