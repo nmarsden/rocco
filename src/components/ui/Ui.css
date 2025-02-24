@@ -74,6 +74,13 @@
     text-shadow: 0 0 30px white;
 }
 
+.sub-heading {
+    font-size: 30px;
+    color: white;
+    text-shadow: 0 0 30px white;
+    margin-top: 50px;
+}
+
 .tagLine {
     margin-top: 40px;
 }
@@ -84,8 +91,10 @@
 }
 
 .links {
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 20px;
+    display: flex;
+    gap: 10px;
 }
 
 .links a,
