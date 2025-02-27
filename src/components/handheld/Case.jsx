@@ -17,7 +17,7 @@ const buttonMaterial = new THREE.MeshStandardMaterial({
 
 let animating = 'NONE'
 let animationStartTime
-const buttonAnimationDurationMSecs = 500
+const buttonAnimationDurationMSecs = 100
 const groupAnimationDurationMSecs = 1500
 
 export default function Case({ children }) {
